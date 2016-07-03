@@ -1,4 +1,4 @@
-package com.zac4j.zwallet;
+package com.zac4j.zwallet.view;
 
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.NavigationView;
@@ -8,22 +8,29 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.databinding.ActivityMainBinding;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener{
 
   private DrawerLayout mDrawerLayout;
   private NavigationView mNavigationView;
+  private MainViewModel mViewModel;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-    MainViewModel viewModel = new MainViewModel(this);
-    binding.setViewModel(viewModel);
+    mViewModel = new MainViewModel(this);
+    binding.setViewModel(mViewModel);
     setupActionBar(binding);
     setupDrawer(binding);
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    mViewModel.destroy();
   }
 
   private void setupActionBar(ActivityMainBinding binding) {
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     if (actionBar != null) {
       actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
       actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setTitle("");
     }
   }
 
@@ -55,4 +63,5 @@ public class MainActivity extends AppCompatActivity
     mDrawerLayout.closeDrawers();
     return true;
   }
+
 }

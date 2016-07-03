@@ -41,31 +41,33 @@
           <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="@dimen/header_height_main"
+              android:orientation="vertical"
               >
 
             <TextView
-                android:id="@id/main_tv_coin_quantity"
+                android:id="@id/main_tv_total_asset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:layout_marginStart="@dimen/space.medium"
-                android:text="@{viewModel.coinQuantity}"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                android:text="@{viewModel.totalAsset}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
-                tools:text="25,100 bits"
+                tools:text="$6.58"
                 />
 
             <TextView
-                android:id="@id/main_tv_money_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/main_tv_coin_quantity"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/space.medium"
-                android:text="@{viewModel.moneyAmount}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/main_tv_total_asset"
+                android:layout_marginEnd="@dimen/space.medium"
+                android:layout_marginTop="@dimen/space.medium"
+                android:onClick="@{viewModel::onRefresh}"
+                android:text="@{viewModel.coinAsset}"
                 android:textColor="@color/white"
-                tools:text="$6.58"
+                tools:text="25,100"
                 />
 
           </RelativeLayout>
@@ -98,7 +100,7 @@
           android:layout_height="match_parent"
           android:layout_marginTop="@dimen/space.small"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          app:visibility="@{viewModel.transactionsVisibility}"
+          app:visibility="@{viewModel.ordersVisibility}"
           />
     </android.support.design.widget.CoordinatorLayout>
 

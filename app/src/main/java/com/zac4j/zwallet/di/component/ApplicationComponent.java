@@ -2,7 +2,10 @@ package com.zac4j.zwallet.di.component;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
+import com.zac4j.zwallet.data.remote.HttpClient;
+import com.zac4j.zwallet.data.remote.WebService;
 import com.zac4j.zwallet.di.ApplicationContext;
 import com.zac4j.zwallet.di.module.ApplicationModule;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
@@ -21,4 +24,7 @@ public interface ApplicationComponent {
 
   @ApplicationContext Context context();
   PreferencesHelper prefsHelper();
+  Gson gson();
+  HttpClient httpClient();
+  WebService webService();
 }

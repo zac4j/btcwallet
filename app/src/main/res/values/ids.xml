@@ -24,7 +24,7 @@
   <!--main page-->
   <item name="main_fr_header_container" type="id" />
   <item name="main_tv_coin_quantity" type="id" />
-  <item name="main_tv_money_amount" type="id" />
+  <item name="main_tv_total_asset" type="id" />
   <item name="main_actionbar" type="id" />
   <item name="main_rv_transaction_list" type="id" />
 

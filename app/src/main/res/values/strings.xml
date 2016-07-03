@@ -12,5 +12,16 @@
   <string name="menu_accounts_let_wallet">LTC Wallet</string>
   <string name="menu_accounts_let_vault">LTC Vault</string>
   <string name="menu_title_more">MORE</string>
+
+  <!--Unit-->
+  <string name="unit_btc">%s bits</string>
+  <string name="unit_ltc">%s lits</string>
+
+  <!--Processing-->
+  <string name="loading">Loading</string>
+  <string name="updating">updating</string>
+  <string name="request_error_network">获取数据失败，请检查网络连接!</string>
+  <string name="request_error_server">获取数据失败，请稍后再试!</string>
+
 </resources>
 
