@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+
+    <item
+        android:id="@id/action_dashboard"
+        android:icon="@drawable/ic_menu_dashboard"
+        android:title="@string/menu_dashboard"
+        />
+
+    <item
+        android:title="@string/menu_title_trade">
+      <menu>
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@id/action_trade_buy"
+            android:icon="@drawable/ic_menu_coin"
+            android:title="@string/menu_trade_buy"/>
+        <item
+            android:id="@id/action_trade_sell"
+            android:icon="@drawable/ic_menu_sell"
+            android:title="@string/menu_trade_sell"/>
+        </group>
+      </menu>
+    </item>
+
+    <item
+        android:title="@string/menu_title_account">
+      <menu>
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@id/action_account_ltc_wallet"
+            android:icon="@drawable/ic_menu_wallet"
+            android:title="@string/menu_accounts_let_wallet"/>
+        <item
+            android:id="@id/action_account_ltc_vault"
+            android:icon="@drawable/ic_menu_vault"
+            android:title="@string/menu_accounts_let_vault"/>
+        </group>
+      </menu>
+    </item>
+
+    <item
+        android:title="@string/menu_title_more">
+      <menu>
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@id/action_settings"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/settings"/>
+        </group>
+      </menu>
+    </item>
+  </group>
+</menu>

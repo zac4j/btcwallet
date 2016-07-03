@@ -1,3 +1,16 @@
 <resources>
   <string name="app_name">ZWallet</string>
+
+  <!--commons-->
+  <string name="settings">Settings</string>
+
+  <string name="menu_dashboard">Dashboard</string>
+  <string name="menu_title_trade">TRADE</string>
+  <string name="menu_trade_buy">Buy</string>
+  <string name="menu_trade_sell">Sell</string>
+  <string name="menu_title_account">ACCOUNTS</string>
+  <string name="menu_accounts_let_wallet">LTC Wallet</string>
+  <string name="menu_accounts_let_vault">LTC Vault</string>
+  <string name="menu_title_more">MORE</string>
 </resources>
+

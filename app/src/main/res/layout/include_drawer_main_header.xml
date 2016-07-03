@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="@dimen/space.medium"
+    >
+
+  <com.facebook.drawee.view.SimpleDraweeView
+      android:id="@id/drawer_main_header_sdv_avatar"
+      android:layout_width="@dimen/img.medium"
+      android:layout_height="@dimen/img.medium"
+      app:placeholderImage="@drawable/ic_avatar"
+      app:roundAsCircle="true"
+      />
+
+  <TextView
+      android:id="@id/drawer_main_header_tv_nickname"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/space.small"
+      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      android:textColor="@color/white"
+      tools:text="Arron"
+      />
+
+  <TextView
+      android:id="@id/drawer_main_header_tv_account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      android:textColor="@color/white"
+      tools:text="arron@gmail.com"
+      />
+
+</LinearLayout>
