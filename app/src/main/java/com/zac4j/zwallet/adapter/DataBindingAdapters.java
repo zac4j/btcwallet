@@ -2,6 +2,11 @@ package com.zac4j.zwallet.adapter;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 /**
  * Data Binding Adapters
@@ -10,8 +15,9 @@ import android.widget.ImageView;
 public class DataBindingAdapters {
 
   @BindingAdapter("imageResource")
-  public static void setImageResource(ImageView imageView, int resource){
-    imageView.setImageResource(resource);
+  public static void setImageResource(SimpleDraweeView draweeView, int resource){
+    ImageRequest request = ImageRequestBuilder.newBuilderWithResourceId(resource).build();
+    draweeView.setImageURI(request.getSourceUri());
   }
 
 }

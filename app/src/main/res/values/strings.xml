@@ -9,9 +9,11 @@
   <string name="menu_trade_buy">Buy</string>
   <string name="menu_trade_sell">Sell</string>
   <string name="menu_title_account">ACCOUNTS</string>
-  <string name="menu_accounts_let_wallet">LTC Wallet</string>
-  <string name="menu_accounts_let_vault">LTC Vault</string>
+  <string name="menu_accounts_wallet">Wallet</string>
+  <string name="menu_accounts_vault">Vault</string>
   <string name="menu_title_more">MORE</string>
+  <string name="menu_coin_ltc">LiteCoin</string>
+  <string name="menu_coin_btc">BitCoin</string>
 
   <!--Unit-->
   <string name="unit_btc">%s bits</string>

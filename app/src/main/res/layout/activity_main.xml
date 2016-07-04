@@ -101,6 +101,7 @@
           android:layout_marginTop="@dimen/space.small"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
           app:visibility="@{viewModel.ordersVisibility}"
+          tools:listitem="@layout/list_item_main_recent_orders"
           />
     </android.support.design.widget.CoordinatorLayout>
 

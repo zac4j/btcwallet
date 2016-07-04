@@ -11,9 +11,10 @@
   <item name="action_dashboard" type="id" />
   <item name="action_trade_buy" type="id" />
   <item name="action_trade_sell" type="id" />
-  <item name="action_account_ltc_wallet" type="id" />
-  <item name="action_account_ltc_vault" type="id" />
+  <item name="action_account_wallet" type="id" />
+  <item name="action_account_vault" type="id" />
   <item name="action_settings" type="id" />
+  <item name="action_coin_switch" type="id"/>
 
   <!--drawer header-->
   <item name="drawer_main_layout" type="id" />
@@ -36,5 +37,6 @@
   <item name="recent_order_item_tv_process_name" type="id" />
   <item name="recent_order_item_tv_processed_time" type="id" />
   <item name="recent_order_item_iv_detail_entry" type="id" />
+  <item name="drawer_coin_switch" type="id"/>
 
 </resources>

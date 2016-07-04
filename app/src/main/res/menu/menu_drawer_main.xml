@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
   <group android:checkableBehavior="single">
 
     <item
@@ -12,14 +13,14 @@
         android:title="@string/menu_title_trade">
       <menu>
         <group android:checkableBehavior="single">
-        <item
-            android:id="@id/action_trade_buy"
-            android:icon="@drawable/ic_menu_coin"
-            android:title="@string/menu_trade_buy"/>
-        <item
-            android:id="@id/action_trade_sell"
-            android:icon="@drawable/ic_menu_sell"
-            android:title="@string/menu_trade_sell"/>
+          <item
+              android:id="@id/action_trade_buy"
+              android:icon="@drawable/ic_menu_coin"
+              android:title="@string/menu_trade_buy"/>
+          <item
+              android:id="@id/action_trade_sell"
+              android:icon="@drawable/ic_menu_sell"
+              android:title="@string/menu_trade_sell"/>
         </group>
       </menu>
     </item>
@@ -28,14 +29,14 @@
         android:title="@string/menu_title_account">
       <menu>
         <group android:checkableBehavior="single">
-        <item
-            android:id="@id/action_account_ltc_wallet"
-            android:icon="@drawable/ic_menu_wallet"
-            android:title="@string/menu_accounts_let_wallet"/>
-        <item
-            android:id="@id/action_account_ltc_vault"
-            android:icon="@drawable/ic_menu_vault"
-            android:title="@string/menu_accounts_let_vault"/>
+          <item
+              android:id="@id/action_account_wallet"
+              android:icon="@drawable/ic_menu_wallet"
+              android:title="@string/menu_accounts_wallet"/>
+          <item
+              android:id="@id/action_account_vault"
+              android:icon="@drawable/ic_menu_vault"
+              android:title="@string/menu_accounts_vault"/>
         </group>
       </menu>
     </item>
@@ -44,10 +45,15 @@
         android:title="@string/menu_title_more">
       <menu>
         <group android:checkableBehavior="single">
-        <item
-            android:id="@id/action_settings"
-            android:icon="@drawable/ic_menu_settings"
-            android:title="@string/settings"/>
+          <item
+              android:id="@id/action_settings"
+              android:icon="@drawable/ic_menu_settings"
+              android:title="@string/settings"/>
+          <item
+              android:id="@id/action_coin_switch"
+              android:icon="@drawable/ic_menu_asset"
+              android:title="@string/menu_coin_ltc"
+              app:actionLayout="@layout/include_drawer_coin_switch"/>
         </group>
       </menu>
     </item>
