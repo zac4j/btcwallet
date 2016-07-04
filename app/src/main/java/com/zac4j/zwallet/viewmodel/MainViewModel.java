@@ -41,9 +41,20 @@ public class MainViewModel implements ViewModel {
   private Context mContext;
   private Subscription mSubscription;
   private int coinType;
+  private String requestTime;
 
   @Inject PreferencesHelper mPrefsHelper;
   @Inject WebService mWebService;
+
+  public interface OnDataChangedListener {
+    void onGetRecentOrders(List<DealOrder> dealOrderList);
+  }
+
+  private OnDataChangedListener mDataChangedListener;
+
+  public void setOnDataChangedListener(OnDataChangedListener listener) {
+    mDataChangedListener = listener;
+  }
 
   public MainViewModel(Context context) {
     mContext = context;
@@ -57,24 +68,22 @@ public class MainViewModel implements ViewModel {
     coinType =
         mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
 
-    getAccountInfo();
+    // Get data while showing
+    requestTime = String.valueOf(System.currentTimeMillis()).substring(0, 10);
+    getAccountInfo(requestTime);
+    getRecentOrders(requestTime);
   }
 
   public void onRefresh(View view) {
-    getAccountInfo();
+    getAccountInfo(requestTime);
+    getRecentOrders(requestTime);
   }
 
-  private void getAccountInfo() {
-    Map<String, String> requestMap = new HashMap<>();
-    requestMap.put("method", GET_ACCOUNT_INFO);
-    requestMap.put("access_key", Utils.ACCESS_KEY);
-
-    String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    requestMap.put("created", time);
-    requestMap.put("sign", Utils.generateSign(GET_ACCOUNT_INFO, time));
-
+  private void getAccountInfo(String time) {
     progressVisibility.set(View.VISIBLE);
-    mSubscription = mWebService.getAccountInfo(requestMap)
+
+    mSubscription = mWebService.getAccountInfo(GET_ACCOUNT_INFO, Utils.ACCESS_KEY, time,
+        Utils.generateSign(GET_ACCOUNT_INFO, time))
         .compose(RxUtils.<AccountInfo>applySchedulers())
         .subscribe(new Subscriber<AccountInfo>() {
           @Override public void onCompleted() {
@@ -105,31 +114,29 @@ public class MainViewModel implements ViewModel {
         });
   }
 
-  private void getRecentOrders() {
+  private void getRecentOrders(String time) {
     progressVisibility.set(View.VISIBLE);
-    Map<String, String> requestMap = new HashMap<>();
-    requestMap.put("method", GET_RECENT_ORDERS);
-    requestMap.put("access_key", Utils.ACCESS_KEY);
-    requestMap.put("coin_type", String.valueOf(coinType));
-    String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    requestMap.put("created", time);
-    requestMap.put("sign", Utils.generateSign(GET_RECENT_ORDERS, time));
 
-    mSubscription = mWebService.getRecentOrders(requestMap)
-        .compose(RxUtils.<List<DealOrder>>applySchedulers())
-        .subscribe(new Subscriber<List<DealOrder>>() {
-          @Override public void onCompleted() {
-            progressVisibility.set(View.INVISIBLE);
-          }
+    mSubscription =
+        mWebService.getRecentOrders(GET_RECENT_ORDERS, Utils.ACCESS_KEY, String.valueOf(coinType),
+            time, Utils.generateSign(GET_RECENT_ORDERS, String.valueOf(coinType), time))
+            .compose(RxUtils.<List<DealOrder>>applySchedulers())
+            .subscribe(new Subscriber<List<DealOrder>>() {
+              @Override public void onCompleted() {
+                progressVisibility.set(View.INVISIBLE);
+              }
 
-          @Override public void onError(Throwable e) {
-            progressVisibility.set(View.INVISIBLE);
-          }
+              @Override public void onError(Throwable e) {
+                progressVisibility.set(View.INVISIBLE);
+              }
 
-          @Override public void onNext(List<DealOrder> dealOrders) {
-
-          }
-        });
+              @Override public void onNext(List<DealOrder> dealOrders) {
+                if (dealOrders != null && !dealOrders.isEmpty()) {
+                  mDataChangedListener.onGetRecentOrders(dealOrders);
+                  ordersVisibility.set(View.VISIBLE);
+                }
+              }
+            });
   }
 
   @Override public void destroy() {

@@ -6,13 +6,17 @@
   <!--height-->
   <dimen name="header_height_nav">192dp</dimen>
   <dimen name="header_height_main">164dp</dimen>
+  <dimen name="height_list_item">76dp</dimen>
 
   <!--space-->
   <dimen name="space.medium">16dp</dimen>
   <dimen name="space.small">8dp</dimen>
   <dimen name="space.very_small">4dp</dimen>
+  <dimen name="space.radius">2dp</dimen>
+  <dimen name="space.divider">1dp</dimen>
 
   <!--image size-->
   <dimen name="img.medium">48dp</dimen>
+  <dimen name="img.small">24dp</dimen>
 
 </resources>

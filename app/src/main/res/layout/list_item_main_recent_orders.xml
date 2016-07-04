@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="viewModel"
+        type="com.zac4j.zwallet.viewmodel.ItemRecentOrdersViewModel"
+        />
+  </data>
+
+  <android.support.v7.widget.CardView
+      android:id="@id/card_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:cardCornerRadius="@dimen/space.radius"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_list_item"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/space.small"
+        >
+
+      <com.facebook.drawee.view.SimpleDraweeView
+          android:id="@id/recent_order_item_sdv_avatar"
+          android:layout_width="@dimen/img.small"
+          android:layout_height="@dimen/img.small"
+          android:layout_centerVertical="true"
+          app:roundAsCircle="true"
+          app:roundedCornerRadius="@dimen/space.divider"
+          imageResource="@{viewModel.orderAvatar}"
+          />
+
+      <TextView
+          android:id="@id/recent_order_item_tv_process_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginStart="@dimen/space.medium"
+          android:layout_toEndOf="@id/recent_order_item_sdv_avatar"
+          android:text="@{viewModel.processName}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@{viewModel.processColor}"
+          tools:text="Received"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toStartOf="@id/recent_order_item_iv_detail_entry"
+          android:text="@{viewModel.amount}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          tools:text="- 24,000 bits"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_toStartOf="@id/recent_order_item_iv_detail_entry"
+          android:text="@{viewModel.processedTime}"
+          tools:text="2 minutes ago"
+          />
+
+      <ImageView
+          android:id="@id/recent_order_item_iv_detail_entry"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:onClick="@{viewModel::onItemClick}"
+          android:paddingEnd="@dimen/space.small"
+          android:paddingStart="@dimen/space.medium"
+          android:src="@drawable/ic_arrow_right"
+          />
+    </RelativeLayout>
+  </android.support.v7.widget.CardView>
+</layout>

@@ -20,6 +20,32 @@ public class Utils {
     return md5(originalText);
   }
 
+  public static String generateSign(String methodName,String coinType,String currentTime) {
+    String originalText = "access_key=" + ACCESS_KEY + "&coin_type=" + coinType +
+        "&created=" + currentTime + "&method=" + methodName +
+        "&secret_key=" + SECRET_KEY;
+    return md5(originalText);
+  }
+
+  /**
+   * Transform delta time millis to x min ago style
+   * @param deltaTime delta time
+   * @return new style time
+   */
+  public static String generateTime(long deltaTime) {
+    String result;
+    if (deltaTime < 60) {
+      result = "Just Now!";
+    } else if (deltaTime < 3600) {
+      result = (deltaTime / 60) + " min ago";
+    } else if (deltaTime < 24 * 3600) {
+      result = (deltaTime / 3600) + " hour ago";
+    } else {
+      result = (deltaTime / 24 / 3600) + " day ago";
+    }
+    return result;
+  }
+
   public static String md5(final String originalText) {
     try {
       final MessageDigest digest = MessageDigest.getInstance("md5");

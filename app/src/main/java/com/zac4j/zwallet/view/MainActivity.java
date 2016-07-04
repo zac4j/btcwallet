@@ -7,25 +7,44 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.zac4j.zwallet.R;
+import com.zac4j.zwallet.adapter.DealOrderAdapter;
 import com.zac4j.zwallet.databinding.ActivityMainBinding;
+import com.zac4j.zwallet.model.response.DealOrder;
+import com.zac4j.zwallet.view.widget.DividerItemDecoration;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener{
+    implements NavigationView.OnNavigationItemSelectedListener,
+    MainViewModel.OnDataChangedListener {
 
   private DrawerLayout mDrawerLayout;
   private NavigationView mNavigationView;
   private MainViewModel mViewModel;
+  private ActivityMainBinding mBinding;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
     mViewModel = new MainViewModel(this);
-    binding.setViewModel(mViewModel);
-    setupActionBar(binding);
-    setupDrawer(binding);
+    mBinding.setViewModel(mViewModel);
+    setupDrawer(mBinding);
+    setupActionBar(mBinding.toolbar);
+    setupRecyclerView(mBinding.mainRvOrderList);
+    mViewModel.setOnDataChangedListener(this);
+  }
+
+  private void setupRecyclerView(RecyclerView recyclerView) {
+    DealOrderAdapter adapter = new DealOrderAdapter();
+    recyclerView.setAdapter(adapter);
+    recyclerView.addItemDecoration(
+        new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override protected void onDestroy() {
@@ -33,8 +52,8 @@ public class MainActivity extends AppCompatActivity
     mViewModel.destroy();
   }
 
-  private void setupActionBar(ActivityMainBinding binding) {
-    setSupportActionBar(binding.toolbar);
+  private void setupActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -64,4 +83,9 @@ public class MainActivity extends AppCompatActivity
     return true;
   }
 
+  @Override public void onGetRecentOrders(List<DealOrder> dealOrderList) {
+    DealOrderAdapter adapter = (DealOrderAdapter) mBinding.mainRvOrderList.getAdapter();
+    adapter.addAll(dealOrderList);
+    adapter.notifyDataSetChanged();
+  }
 }

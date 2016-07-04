@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -19,31 +20,37 @@ import rx.Single;
  * Created by zac on 16-7-3.
  */
 
-@Singleton
-public interface WebService {
+@Singleton public interface WebService {
 
   String BASE_URL = "https://api.huobi.com/apiv3/";
 
   /**
    * 查询个人账户信息
-   * @param accountRequestMap request field map
+   *
+   * @param methodName method name
+   * @param accessKey public key
+   * @param created 提交时间 10位时间戳
+   * @param sign md5 generated request body.
    * @return 个人账户信息
    */
-  @FormUrlEncoded
-  @POST(".") Single<AccountInfo> getAccountInfo(@FieldMap Map<String, String> accountRequestMap);
+  @FormUrlEncoded @POST(".") Single<AccountInfo> getAccountInfo(@Field("method") String methodName,
+      @Field("access_key") String accessKey, @Field("created") String created,
+      @Field("sign") String sign);
 
   /**
    * 查询个人最新10条成交订单
-   * @param orderRequestMap request field map
+   *
+   * @param coinType coin type 1 比特币 2 莱特币
    * @return 个人最新10条成交订单
    */
-  @FormUrlEncoded
-  @POST(".") Single<List<DealOrder>> getRecentOrders(@FieldMap Map<String, String> orderRequestMap);
+  @FormUrlEncoded @POST(".") Single<List<DealOrder>> getRecentOrders(
+      @Field("method") String methodName, @Field("access_key") String accessKey,
+      @Field("coin_type") String coinType, @Field("created") String created,
+      @Field("sign") String sign);
 
   class Creator {
     @Inject public WebService create(HttpClient client) {
-      Retrofit retrofit = new Retrofit.Builder()
-          .baseUrl(BASE_URL)
+      Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
           .client(client.create())
           .addConverterFactory(GsonConverterFactory.create())
           .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -52,5 +59,4 @@ public interface WebService {
       return retrofit.create(WebService.class);
     }
   }
-
 }
