@@ -1,1 +1,26 @@
-#Digital Wallet
+## [HuoBi.com][huobi.com] unofficial Android client.
+
+Rest API resource:[HuoBi API][rest-api]
+
+Project Architecture:
++ MVVM
+
+Dependencies:
++ Android DataBinding
++ Dagger 2
++ Retrofit 2
++ RxJava
++ Gson
++ Fresco
++ Stetho
+
+UI Style:
++ Material Design
+
+Code Style:
++ [Square][java-code-style]
+
+[huobi.com]:https://www.huobi.com/
+[rest-api]:https://github.com/huobiapi/API_Docs/wiki
+[java-code-style]:https://github.com/square/java-code-styles
+
