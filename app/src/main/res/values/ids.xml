@@ -4,6 +4,7 @@
   <!--common-->
   <item name="appbar" type="id" />
   <item name="toolbar" type="id" />
+  <item name="actionbar" type="id" />
   <item name="progress_bar" type="id" />
   <item name="card_view" type="id" />
 
@@ -38,5 +39,12 @@
   <item name="recent_order_item_tv_processed_time" type="id" />
   <item name="recent_order_item_iv_detail_entry" type="id" />
   <item name="drawer_coin_switch" type="id"/>
+
+  <!--send funds-->
+  <item name="send_funds_et_address" type="id" />
+  <item name="send_funds_et_amount" type="id" />
+  <item name="send_funds_et_note" type="id" />
+  <item name="send_funds_spinner_fund_select" type="id" />
+  <item name="send_funds_btn_send" type="id" />
 
 </resources>

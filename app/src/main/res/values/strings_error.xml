@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--send funds-->
+  <string name="send_funds_address_null_error">收款账号不允许为空!</string>
+  <string name="send_funds_amount_null_error">金额不允许为空!</string>
+
+</resources>

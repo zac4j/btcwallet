@@ -46,7 +46,7 @@ dependencies {
   compile "com.google.dagger:dagger:${daggerVersion}"
   provided "com.google.dagger:dagger-compiler:${daggerVersion}"
   // FireBase
-  compile "com.google.firebase:firebase-database:${firebaseDBVersion}"
+  //compile "com.google.firebase:firebase-database:${firebaseDBVersion}"
   // Knife
   compile "com.jakewharton:butterknife:$rootProject.knifeVersion"
   apt "com.jakewharton:butterknife-compiler:$rootProject.knifeVersion"
@@ -56,4 +56,4 @@ dependencies {
   androidTestCompile "com.android.support:support-annotations:${supportLibraryVersion}"
 }
 
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'

@@ -25,5 +25,14 @@
   <string name="request_error_network">获取数据失败，请检查网络连接!</string>
   <string name="request_error_server">获取数据失败，请稍后再试!</string>
 
+  <!--send funds-->
+  <string name="send_funds_recipient_label">Recipient</string>
+  <string name="send_funds_recipient_hint">Email or bitcoin address</string>
+  <string name="send_funds_amount_label">Amount</string>
+  <string name="send_funds_amount_hint">0.00</string>
+  <string name="send_funds_note_label">Note</string>
+  <string name="send_funds_note_hint">Write an optional message</string>
+  <string name="send_funds_btn_label">Send Funds</string>
+
 </resources>
 

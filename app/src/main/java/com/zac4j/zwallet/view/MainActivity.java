@@ -1,5 +1,6 @@
 package com.zac4j.zwallet.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -114,6 +115,13 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public boolean onNavigationItemSelected(MenuItem item) {
+
+    switch (item.getItemId()) {
+      case R.id.action_trade_sell:
+        startActivity(new Intent(MainActivity.this, SendFundsActivity.class));
+        break;
+    }
+
     mNavigationView.setCheckedItem(item.getItemId());
     mDrawerLayout.closeDrawers();
     return true;

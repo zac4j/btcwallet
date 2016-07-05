@@ -30,8 +30,6 @@
           android:layout_width="@dimen/img.small"
           android:layout_height="@dimen/img.small"
           android:layout_centerVertical="true"
-          app:roundAsCircle="true"
-          app:roundedCornerRadius="@dimen/space.divider"
           imageResource="@{viewModel.orderAvatar}"
           />
 
