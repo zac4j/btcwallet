@@ -2,8 +2,10 @@ package com.zac4j.zwallet.data.remote;
 
 import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
+import com.zac4j.zwallet.model.response.OrderInfo;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.meta.TypeQualifierDefault;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import retrofit2.Retrofit;
@@ -46,6 +48,17 @@ import rx.Single;
   @FormUrlEncoded @POST(".") Single<List<DealOrder>> getRecentOrders(
       @Field("method") String methodName, @Field("access_key") String accessKey,
       @Field("coin_type") String coinType, @Field("created") String created,
+      @Field("sign") String sign);
+
+  /**
+   * 查询委托订单详情
+   *
+   * @param orderId 委托定单id
+   * @return 委托订单详情
+   */
+  @FormUrlEncoded @POST(".") Single<OrderInfo> getOrderInfo(@Field("method") String methodName,
+      @Field("access_key") String accessKey, @Field("coin_type") String coinType,
+      @Field("id") String orderId, @Field("created") String created,
       @Field("sign") String sign);
 
   class Creator {

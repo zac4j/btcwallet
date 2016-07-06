@@ -3,6 +3,7 @@ package com.zac4j.zwallet.viewmodel;
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.support.v4.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 import com.zac4j.zwallet.App;
@@ -15,11 +16,14 @@ import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.util.Utils;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
+
+import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
 /**
  * Main page view model
@@ -80,44 +84,62 @@ public class MainViewModel implements ViewModel {
   private void getAccountInfo(String time) {
     progressVisibility.set(View.VISIBLE);
 
-    mSubscription = mWebService.getAccountInfo(GET_ACCOUNT_INFO, Utils.ACCESS_KEY, time,
-        Utils.generateSign(GET_ACCOUNT_INFO, time))
-        .compose(RxUtils.<AccountInfo>applySchedulers())
-        .subscribe(new Subscriber<AccountInfo>() {
-          @Override public void onCompleted() {
-            progressVisibility.set(View.INVISIBLE);
-          }
+    List<Pair<String, String>> parameterPairs = new ArrayList<>();
+    Pair<String, String> createdTimePair = new Pair<>(Constants.CREATED_TIME, time);
+    Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, GET_ACCOUNT_INFO);
 
-          @Override public void onError(Throwable e) {
-            progressVisibility.set(View.INVISIBLE);
-            Toast.makeText(mContext, mContext.getString(R.string.request_error_network),
-                Toast.LENGTH_SHORT).show();
-          }
+    parameterPairs.add(createdTimePair);
+    parameterPairs.add(methodNamePair);
 
-          @Override public void onNext(AccountInfo accountInfo) {
-            if (accountInfo != null) {
-              NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
-              String totalAssets = formatter.format(Double.parseDouble(accountInfo.getTotal()));
-              totalAsset.set(totalAssets);
-
-              String coinAssets;
-              if (coinType == Constants.COIN_TYPE_BTC) {
-                coinAssets = mContext.getString(R.string.unit_btc, accountInfo.getAvailableBTC());
-              } else {
-                coinAssets = mContext.getString(R.string.unit_ltc, accountInfo.getAvailableLTC());
+    mSubscription =
+        mWebService.getAccountInfo(GET_ACCOUNT_INFO, ACCESS_KEY, time, Utils.generateSign(parameterPairs))
+            .compose(RxUtils.<AccountInfo>applySchedulers())
+            .subscribe(new Subscriber<AccountInfo>() {
+              @Override public void onCompleted() {
+                progressVisibility.set(View.INVISIBLE);
               }
-              coinAsset.set(coinAssets);
-            }
-          }
-        });
+
+              @Override public void onError(Throwable e) {
+                progressVisibility.set(View.INVISIBLE);
+                Toast.makeText(mContext, mContext.getString(R.string.request_error_network),
+                    Toast.LENGTH_SHORT).show();
+              }
+
+              @Override public void onNext(AccountInfo accountInfo) {
+                if (accountInfo != null) {
+                  NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
+                  String totalAssets = formatter.format(Double.parseDouble(accountInfo.getTotal()));
+                  totalAsset.set(totalAssets);
+
+                  String coinAssets;
+                  if (coinType == Constants.COIN_TYPE_BTC) {
+                    coinAssets =
+                        mContext.getString(R.string.unit_btc, accountInfo.getAvailableBTC());
+                  } else {
+                    coinAssets =
+                        mContext.getString(R.string.unit_ltc, accountInfo.getAvailableLTC());
+                  }
+                  coinAsset.set(coinAssets);
+                }
+              }
+            });
   }
 
   private void getRecentOrders(String time) {
     progressVisibility.set(View.VISIBLE);
 
+    List<Pair<String, String>> parameterPairs = new ArrayList<>();
+    Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, GET_RECENT_ORDERS);
+    Pair<String, String> createdTimePair = new Pair<>(Constants.CREATED_TIME, time);
+    Pair<String, String> coinTypePair = new Pair<>(Constants.COIN_TYPE, String.valueOf(coinType));
+
+    parameterPairs.add(coinTypePair);
+    parameterPairs.add(createdTimePair);
+    parameterPairs.add(methodNamePair);
+
     mSubscription =
-        mWebService.getRecentOrders(GET_RECENT_ORDERS, Utils.ACCESS_KEY, String.valueOf(coinType),
-            time, Utils.generateSign(GET_RECENT_ORDERS, String.valueOf(coinType), time))
+        mWebService.getRecentOrders(GET_RECENT_ORDERS, ACCESS_KEY, String.valueOf(coinType), time,
+            Utils.generateSign(parameterPairs))
             .compose(RxUtils.<List<DealOrder>>applySchedulers())
             .subscribe(new Subscriber<List<DealOrder>>() {
               @Override public void onCompleted() {
@@ -142,4 +164,5 @@ public class MainViewModel implements ViewModel {
       mSubscription.unsubscribe();
     }
   }
+
 }

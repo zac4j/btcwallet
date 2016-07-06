@@ -64,10 +64,19 @@
                 android:layout_below="@id/main_tv_total_asset"
                 android:layout_marginEnd="@dimen/space.medium"
                 android:layout_marginTop="@dimen/space.medium"
-                android:onClick="@{viewModel::onRefresh}"
+
                 android:text="@{viewModel.coinAsset}"
                 android:textColor="@color/white"
                 tools:text="25,100"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space.small"
+                android:onClick="@{viewModel::onRefresh}"
+                android:layout_alignParentBottom="true"
+                android:text="refresh"
                 />
 
           </RelativeLayout>

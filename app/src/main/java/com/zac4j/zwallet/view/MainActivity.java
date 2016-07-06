@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
     switch (item.getItemId()) {
       case R.id.action_trade_sell:
-        startActivity(new Intent(MainActivity.this, SendFundsActivity.class));
+        startActivity(new Intent(MainActivity.this, MyWalletActivity.class));
         break;
     }
 

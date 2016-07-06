@@ -88,7 +88,7 @@ public class ItemRecentOrdersViewModel extends BaseObservable implements ViewMod
   }
 
   public void onItemClick(View view) {
-
+    // TODO jump to order detail page e.g getOrderInfo...
   }
 
   @Override public void destroy() {}

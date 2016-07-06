@@ -2,12 +2,13 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
   <data>
     <variable
         name="viewModel"
-        type="com.zac4j.zwallet.viewmodel.SendFundsViewModel"
+        type="com.zac4j.zwallet.viewmodel.FundsViewModel"
         />
   </data>
 
@@ -17,13 +18,35 @@
       >
 
     <include
+        layout="@layout/include_actionbar"
         android:id="@id/actionbar"
-        layout="@layout/include_actionbar"/>
+        />
+
+    <android.support.design.widget.TabLayout
+        android:id="@id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        >
+
+      <android.support.design.widget.TabItem
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/funds_tab_send"
+          />
+
+      <android.support.design.widget.TabItem
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/funds_tab_request"
+          />
+
+    </android.support.design.widget.TabLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_below="@id/tab_layout"
         android:orientation="vertical"
         android:padding="@dimen/space.medium"
         >
@@ -31,25 +54,26 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/send_funds_recipient_label"
+          android:text="@{viewModel.fundsLabel}"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          tools:text="@string/funds_label_send"
           />
 
       <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/space.small"
-          android:hint="@string/send_funds_recipient_hint"
+          android:hint="@string/funds_address_hint"
           >
         <android.support.design.widget.TextInputEditText
             android:id="@id/send_funds_et_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.recipientAddress}"
             android:inputType="text"
-            app:error="@{viewModel.recipientAddressError}"
-            app:addTextChangedListener="@{viewModel.recipientWatcher}"
+            android:text="@={viewModel.address}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:addTextChangedListener="@{viewModel.recipientWatcher}"
+            app:error="@{viewModel.addressError}"
             />
       </android.support.design.widget.TextInputLayout>
 
@@ -57,7 +81,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/space.medium"
-          android:text="@string/send_funds_amount_label"
+          android:text="@string/funds_amount_label"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           />
 
@@ -65,17 +89,17 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/space.small"
-          android:hint="@string/send_funds_amount_hint"
+          android:hint="@string/funds_amount_hint"
           >
         <android.support.design.widget.TextInputEditText
             android:id="@id/send_funds_et_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.sendAmount}"
-            app:error="@{viewModel.sendAmountError}"
-            app:addTextChangedListener="@{viewModel.amountWatcher}"
             android:inputType="numberDecimal"
+            android:text="@={viewModel.amount}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:addTextChangedListener="@{viewModel.amountWatcher}"
+            app:error="@{viewModel.amountError}"
             />
       </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +107,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/space.medium"
-          android:text="@string/send_funds_note_label"
+          android:text="@string/funds_note_label"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           />
 
@@ -91,15 +115,15 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/space.small"
-          android:hint="@string/send_funds_note_hint"
+          android:hint="@string/funds_note_hint"
           >
         <android.support.design.widget.TextInputEditText
             android:id="@id/send_funds_et_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.noteMessage}"
             android:inputType="text"
             android:maxLength="25"
+            android:text="@={viewModel.noteMessage}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             />
       </android.support.design.widget.TextInputLayout>
@@ -118,8 +142,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:onClick="@{viewModel::onSendClick}"
-        android:text="@string/send_funds_btn_label"
+        android:onClick="@{viewModel::onClick}"
+        android:text="@{viewModel.fundsBtnLabel}"
+        tools:text="@string/funds_btn_label_send"
         style="@style/Widget.AppCompat.Button.Colored"
         />
   </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.zac4j.zwallet.util;
 
+import android.support.v4.util.Pair;
 import java.security.MessageDigest;
+import java.util.List;
 
 /**
  * Utilities
@@ -13,22 +15,21 @@ public class Utils {
 
   private static final String SECRET_KEY = "47922755-48ad16d8-6099bf62-46f15";
 
-  public static String generateSign(String methodName, String currentTime) {
-    String originalText = "access_key=" + ACCESS_KEY +
-        "&created=" + currentTime + "&method=" + methodName +
-        "&secret_key=" + SECRET_KEY;
-    return md5(originalText);
-  }
+  public static String generateSign(List<Pair<String, String>> pairs) {
+    String result = "access_key=" + ACCESS_KEY;
+    for (int i = 0; i < pairs.size(); i++) {
+      result += pairs.get(i).first + pairs.get(i).second;
+    }
+    result += "&secret_key=" + SECRET_KEY;
 
-  public static String generateSign(String methodName,String coinType,String currentTime) {
-    String originalText = "access_key=" + ACCESS_KEY + "&coin_type=" + coinType +
-        "&created=" + currentTime + "&method=" + methodName +
-        "&secret_key=" + SECRET_KEY;
-    return md5(originalText);
+    System.out.println("result: " + result);
+
+    return md5(result);
   }
 
   /**
    * Transform delta time millis to x min ago style
+   *
    * @param deltaTime delta time
    * @return new style time
    */
@@ -60,5 +61,4 @@ public class Utils {
       return "";
     }
   }
-
 }
