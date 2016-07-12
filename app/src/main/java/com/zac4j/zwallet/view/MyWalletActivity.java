@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.databinding.ActivityMyWalletBinding;
-import com.zac4j.zwallet.viewmodel.FundsViewModel;
+import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
 
 /**
  * Send Funds Activity
@@ -19,12 +19,12 @@ import com.zac4j.zwallet.viewmodel.FundsViewModel;
 public class MyWalletActivity extends AppCompatActivity {
 
   private ActivityMyWalletBinding mBinding;
-  private FundsViewModel mViewModel;
+  private MyWalletViewModel mViewModel;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_wallet);
-    mViewModel = new FundsViewModel(this);
+    mViewModel = new MyWalletViewModel(this);
     mBinding.setViewModel(mViewModel);
     setupActionBar(mBinding.actionbar.toolbar);
     setupTabLayout(mBinding.tabLayout);
@@ -36,18 +36,20 @@ public class MyWalletActivity extends AppCompatActivity {
         int selectIndex = tab.getPosition();
         if (selectIndex == 0) {
           mViewModel.isSendFunds.set(true);
-          mViewModel.fundsLabel.set(getString(R.string.funds_label_send));
-          mViewModel.fundsBtnLabel.set(getString(R.string.funds_btn_label_send));
+          mViewModel.fundsLabel.set(getString(R.string.wallet_label_send));
+          mViewModel.fundsBtnLabel.set(getString(R.string.wallet_btn_label_send));
         } else {
           mViewModel.isSendFunds.set(false);
-          mViewModel.fundsLabel.set(getString(R.string.funds_label_request));
-          mViewModel.fundsBtnLabel.set(getString(R.string.funds_btn_label_request));
+          mViewModel.fundsLabel.set(getString(R.string.wallet_label_request));
+          mViewModel.fundsBtnLabel.set(getString(R.string.wallet_btn_label_request));
         }
       }
 
-      @Override public void onTabUnselected(TabLayout.Tab tab) {}
+      @Override public void onTabUnselected(TabLayout.Tab tab) {
+      }
 
-      @Override public void onTabReselected(TabLayout.Tab tab) {}
+      @Override public void onTabReselected(TabLayout.Tab tab) {
+      }
     });
   }
 

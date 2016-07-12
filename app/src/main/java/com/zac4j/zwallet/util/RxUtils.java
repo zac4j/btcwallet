@@ -1,6 +1,7 @@
 package com.zac4j.zwallet.util;
 
 import rx.Single;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -14,10 +15,14 @@ public class RxUtils {
   public static <T> Single.Transformer<T, T> applySchedulers() {
     return new Single.Transformer<T, T>() {
       @Override public Single<T> call(Single<T> tSingle) {
-        return tSingle.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return tSingle.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
       }
     };
   }
 
+  public static void unsubscribe(Subscription subscription) {
+    if (subscription != null && !subscription.isUnsubscribed()) {
+      subscription.unsubscribe();
+    }
+  }
 }

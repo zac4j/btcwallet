@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.zac4j.zwallet.viewmodel.CoinTradeViewModel"
+        />
+  </data>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@id/root_layout"
+        >
+
+      <include
+          layout="@layout/include_actionbar"
+          android:id="@id/actionbar"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="?android:attr/actionBarSize"
+          android:orientation="vertical"
+          android:padding="@dimen/space.medium"
+          >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@{viewModel.mCoinTradeLabel}"
+              android:textAppearance="@style/TextAppearance.AppCompat.Title"
+              tools:text="@string/coin_trade_buy_label"
+              />
+
+          <android.support.design.widget.TextInputLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:hint="@string/coin_trade_target_price_hint"
+              >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="7"
+                android:maxLines="1"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.mTargetPrice}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:error="@{viewModel.mTargetPriceError}"
+                />
+          </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+        <View style="@style/Divider"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/coin_trade_amount_label"
+              android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:onClick="@{viewModel::onMaxAmountClick}"
+              android:text="@string/coin_trade_amount_max_label"
+              />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.small"
+            android:padding="@dimen/space.small"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@{viewModel.mAssetLabel}"
+              android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+              tools:text="@string/coin_trade_money_cny_label"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              tools:text="200.00"
+              />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space.small"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/coin_trade_coin_label"
+              android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+              />
+
+          <android.support.design.widget.TextInputLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:hint="@string/coin_trade_target_amount_hint"
+              >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:ellipsize="end"
+                android:maxLength="7"
+                android:maxLines="1"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.mCoinAmount}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:error="@{viewModel.mCoinAmountError}"
+                />
+          </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.medium"
+            android:text="@string/coin_trade_payment_method_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.small"
+            android:entries="@array/payment_method"
+            android:padding="@dimen/space.very_small"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.medium"
+            android:text="@string/coin_trade_deposit_to_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.small"
+            android:entries="@array/deposit"
+            android:padding="@dimen/space.very_small"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.medium"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/coin_trade_cost_fee_label"
+              android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:text="@{viewModel.mTradeFee}"
+              android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+              tools:text="￥5.00"
+              />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space.medium"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/coin_trade_total_payment_label"
+              android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:text="@{viewModel.mTotalPayment}"
+              android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+              tools:text="￥200.00"
+              />
+
+        </RelativeLayout>
+
+        <View style="@style/Divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+          <CheckBox
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/coin_trade_repeat_buy_hint"
+              />
+
+          <android.support.v7.widget.AppCompatSpinner
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:entries="@array/repeat_frequency"
+              />
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <ProgressBar
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          app:visibility="@{viewModel.progressVisibility}"
+          style="@style/Widget.AppCompat.ProgressBar"
+          />
+
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:onClick="@{viewModel.onTradeClick}"
+          android:text="@{viewModel.mCoinTradeBtnLabel}"
+          style="@style/Widget.AppCompat.Button.Colored"
+          />
+    </RelativeLayout>
+  </ScrollView>
+</layout>

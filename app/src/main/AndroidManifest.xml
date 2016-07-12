@@ -25,6 +25,13 @@
     <activity
         android:name=".view.MyWalletActivity"
         android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
+        />
+
+    <activity
+        android:name=".view.CoinTradeActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
         />
   </application>
 

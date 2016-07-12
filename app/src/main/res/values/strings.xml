@@ -26,17 +26,35 @@
   <string name="request_error_server">获取数据失败，请稍后再试!</string>
 
   <!--send funds-->
-  <string name="funds_label_send">Recipient</string>
-  <string name="funds_label_request">From</string>
-  <string name="funds_tab_send">Send</string>
-  <string name="funds_tab_request">Request</string>
-  <string name="funds_address_hint">Email or bitcoin address</string>
-  <string name="funds_amount_label">Amount</string>
-  <string name="funds_amount_hint">0.00</string>
-  <string name="funds_note_label">Note</string>
-  <string name="funds_note_hint">Write an optional message</string>
-  <string name="funds_btn_label_send">Send Funds</string>
-  <string name="funds_btn_label_request">Request Funds</string>
+  <string name="wallet_label_send">Recipient</string>
+  <string name="wallet_label_request">From</string>
+  <string name="wallet_tab_send">Send</string>
+  <string name="wallet_tab_request">Request</string>
+  <string name="wallet_address_hint">Email or BitCoin address</string>
+  <string name="wallet_amount_label">Amount</string>
+  <string name="wallet_amount_hint">Coin amount</string>
+  <string name="wallet_note_label">Note</string>
+  <string name="wallet_note_hint">Write an optional message</string>
+  <string name="wallet_btn_label_send">Send Funds</string>
+  <string name="wallet_btn_label_request">Request Funds</string>
+
+  <!--coin trade-->
+  <string name="coin_trade_tab_sell">Sell</string>
+  <string name="coin_trade_tab_buy">Buy</string>
+  <string name="coin_trade_sell_label">Sell Coin</string>
+  <string name="coin_trade_buy_label">Buy Coin</string>
+  <string name="coin_trade_target_price_hint">Target Price</string>
+  <string name="coin_trade_amount_label">Amount</string>
+  <string name="coin_trade_money_cny_label">CNY</string>
+  <string name="coin_trade_money_usd_label">USD</string>
+  <string name="coin_trade_coin_label">Coin</string>
+  <string name="coin_trade_target_amount_hint">Target Amount</string>
+  <string name="coin_trade_amount_max_label">MAX</string>
+  <string name="coin_trade_payment_method_label">Payment method</string>
+  <string name="coin_trade_deposit_to_label">Deposit to</string>
+  <string name="coin_trade_cost_fee_label">Fee</string>
+  <string name="coin_trade_total_payment_label">Total</string>
+  <string name="coin_trade_repeat_buy_hint">repeat this buy every </string>
 
 </resources>
 

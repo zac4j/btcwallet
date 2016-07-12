@@ -3,6 +3,7 @@ package com.zac4j.zwallet.data.remote;
 import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.model.response.OrderInfo;
+import com.zac4j.zwallet.model.response.TradeResponse;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.meta.TypeQualifierDefault;
@@ -58,8 +59,21 @@ import rx.Single;
    */
   @FormUrlEncoded @POST(".") Single<OrderInfo> getOrderInfo(@Field("method") String methodName,
       @Field("access_key") String accessKey, @Field("coin_type") String coinType,
-      @Field("id") String orderId, @Field("created") String created,
-      @Field("sign") String sign);
+      @Field("id") String orderId, @Field("created") String created, @Field("sign") String sign);
+
+  /**
+   * 买入/卖出
+   * @param methodName buy 买入/sell 卖出
+   * @param targetPrice 目标价格
+   * @param amount 交易数量
+   * @return result success 表示买入成功
+   */
+  @FormUrlEncoded @POST(".") Single<TradeResponse> trade(@Field("method") String methodName,
+      @Field("access_key") String accessKey, @Field("coin_type") int coinType,
+      @Field("price") double targetPrice, @Field("amount") int amount,
+      @Field("created") String created, @Field("sign") String sign);
+
+
 
   class Creator {
     @Inject public WebService create(HttpClient client) {

@@ -117,7 +117,15 @@ public class MainActivity extends AppCompatActivity
   @Override public boolean onNavigationItemSelected(MenuItem item) {
 
     switch (item.getItemId()) {
+      case R.id.action_trade_buy:
+        startActivity(new Intent(MainActivity.this, CoinTradeActivity.class).putExtra(
+            CoinTradeActivity.EXTRA_TRADE, CoinTradeActivity.TRADE_TYPE_BUY));
+        break;
       case R.id.action_trade_sell:
+        startActivity(new Intent(MainActivity.this, CoinTradeActivity.class).putExtra(
+            CoinTradeActivity.EXTRA_TRADE, CoinTradeActivity.TRADE_TYPE_SELL));
+        break;
+      case R.id.action_account_wallet:
         startActivity(new Intent(MainActivity.this, MyWalletActivity.class));
         break;
     }

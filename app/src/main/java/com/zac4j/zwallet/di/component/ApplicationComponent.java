@@ -8,7 +8,8 @@ import com.zac4j.zwallet.data.remote.HttpClient;
 import com.zac4j.zwallet.data.remote.WebService;
 import com.zac4j.zwallet.di.ApplicationContext;
 import com.zac4j.zwallet.di.module.ApplicationModule;
-import com.zac4j.zwallet.viewmodel.FundsViewModel;
+import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
+import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -22,7 +23,8 @@ import javax.inject.Singleton;
 public interface ApplicationComponent {
 
   void inject(MainViewModel mainViewModel);
-  void inject(FundsViewModel sendFundsViewModel);
+  void inject(MyWalletViewModel sendMyWalletViewModel);
+  void inject(CoinTradeViewModel coinTradeViewModel);
 
   @ApplicationContext Context context();
   PreferencesHelper prefsHelper();

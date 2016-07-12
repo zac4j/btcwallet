@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="unit">
+    <item>lits</item>
+    <item>bits</item>
+  </string-array>
+  <string-array name="payment_method">
+    <item>Bank</item>
+    <item>Alipay</item>
+  </string-array>
+  <string-array name="deposit">
+    <item>My Wallet</item>
+    <item>Account</item>
+  </string-array>
+  <string-array name="repeat_frequency">
+    <item>week</item>
+    <item>month</item>
+  </string-array>
+</resources>

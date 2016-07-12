@@ -47,5 +47,6 @@
   <item name="send_funds_et_note" type="id" />
   <item name="send_funds_spinner_fund_select" type="id" />
   <item name="send_funds_btn_send" type="id" />
+  <item name="root_layout" type="id"/>
 
 </resources>

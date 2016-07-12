@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import com.zac4j.zwallet.App;
+import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.remote.WebService;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -17,7 +18,7 @@ import rx.Subscription;
  * Send Funds(Coin/CNY etc.)
  * Created by Zac on 2016/7/5.
  */
-public class FundsViewModel implements ViewModel {
+public class MyWalletViewModel implements ViewModel {
 
   public ObservableBoolean isSendFunds;
   public ObservableInt progressVisibility;
@@ -34,7 +35,7 @@ public class FundsViewModel implements ViewModel {
 
   @Inject WebService mWebService;
 
-  public FundsViewModel(Context context) {
+  public MyWalletViewModel(Context context) {
     mContext = context;
 
     isSendFunds = new ObservableBoolean(true);
@@ -45,7 +46,9 @@ public class FundsViewModel implements ViewModel {
     amountError = new ObservableField<>();
     noteMessage = new ObservableField<>();
     fundsLabel = new ObservableField<>();
+    fundsLabel.set(mContext.getString(R.string.wallet_label_send));
     fundsBtnLabel = new ObservableField<>();
+    fundsBtnLabel.set(mContext.getString(R.string.wallet_btn_label_send));
 
     App.get(mContext).getApplicationComponent().inject(this);
   }

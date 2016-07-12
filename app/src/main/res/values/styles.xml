@@ -8,4 +8,12 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="Divider">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/space.divider</item>
+    <item name="android:background">@color/gray_light</item>
+    <item name="android:layout_marginTop">@dimen/space.medium</item>
+    <item name="android:layout_marginBottom">@dimen/space.medium</item>
+  </style>
+
 </resources>
