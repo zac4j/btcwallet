@@ -48,7 +48,7 @@ import rx.Single;
    */
   @FormUrlEncoded @POST(".") Single<List<DealOrder>> getRecentOrders(
       @Field("method") String methodName, @Field("access_key") String accessKey,
-      @Field("coin_type") String coinType, @Field("created") String created,
+      @Field("coin_type") int coinType, @Field("created") String created,
       @Field("sign") String sign);
 
   /**
@@ -58,7 +58,7 @@ import rx.Single;
    * @return 委托订单详情
    */
   @FormUrlEncoded @POST(".") Single<OrderInfo> getOrderInfo(@Field("method") String methodName,
-      @Field("access_key") String accessKey, @Field("coin_type") String coinType,
+      @Field("access_key") String accessKey, @Field("coin_type") int coinType,
       @Field("id") String orderId, @Field("created") String created, @Field("sign") String sign);
 
   /**
@@ -70,7 +70,7 @@ import rx.Single;
    */
   @FormUrlEncoded @POST(".") Single<TradeResponse> trade(@Field("method") String methodName,
       @Field("access_key") String accessKey, @Field("coin_type") int coinType,
-      @Field("price") double targetPrice, @Field("amount") int amount,
+      @Field("price") String targetPrice, @Field("amount") String amount,
       @Field("created") String created, @Field("sign") String sign);
 
 

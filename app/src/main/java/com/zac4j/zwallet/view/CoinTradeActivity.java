@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.zac4j.zwallet.R;
+import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.databinding.ActivityCoinTradeBinding;
 import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
+import javax.inject.Inject;
 
 /**
  * Coin Sell/Buy UI
@@ -23,7 +25,7 @@ public class CoinTradeActivity extends AppCompatActivity {
   public static final int TRADE_TYPE_BUY = 0xa1;
   public static final int TRADE_TYPE_SELL = 0xa2;
 
-  private int tradeType;
+  private int mTradeType;
   private ActivityCoinTradeBinding mBinding;
   private CoinTradeViewModel mViewModel;
 
@@ -33,9 +35,8 @@ public class CoinTradeActivity extends AppCompatActivity {
     mViewModel = new CoinTradeViewModel(this);
     mBinding.setViewModel(mViewModel);
 
-    tradeType = getIntent().getIntExtra(EXTRA_TRADE, 0);
-    mViewModel.setCoinTradeLabel(getTradeLabel(tradeType));
-    mViewModel.setCoinTradeBtnLabel(getTradeTitle(tradeType));
+    mTradeType = getIntent().getIntExtra(EXTRA_TRADE, 0);
+    mViewModel.setTradeType(mTradeType);
 
     setupActionBar(mBinding.actionbar.toolbar);
   }
@@ -45,8 +46,8 @@ public class CoinTradeActivity extends AppCompatActivity {
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setDisplayHomeAsUpEnabled(true);
-      if (tradeType != 0) {
-        actionBar.setTitle(getTradeTitle(tradeType));
+      if (mTradeType != 0) {
+        actionBar.setTitle(getTradeTitle(mTradeType));
       }
     }
   }
@@ -54,11 +55,6 @@ public class CoinTradeActivity extends AppCompatActivity {
   private String getTradeTitle(int tradeType) {
     return tradeType == TRADE_TYPE_BUY ? getString(R.string.menu_trade_buy)
         : getString(R.string.menu_trade_sell);
-  }
-
-  private String getTradeLabel(int tradeType) {
-    return tradeType == TRADE_TYPE_BUY ? getString(R.string.coin_trade_buy_label)
-        : getString(R.string.coin_trade_sell_label);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

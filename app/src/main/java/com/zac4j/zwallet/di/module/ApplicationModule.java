@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.google.gson.Gson;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
+import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.data.remote.HttpClient;
 import com.zac4j.zwallet.data.remote.WebService;
 import com.zac4j.zwallet.di.ApplicationContext;
@@ -48,5 +49,9 @@ public class ApplicationModule {
 
   @Provides @Singleton WebService provideWebService() {
     return new WebService.Creator().create(provideHttpClient());
+  }
+
+  @Provides @Singleton AccountDao provideAccountDao() {
+    return new AccountDao(mApplication);
   }
 }

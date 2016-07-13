@@ -18,9 +18,9 @@
       android:fillViewport="true"
       >
     <RelativeLayout
+        android:id="@id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@id/root_layout"
         >
 
       <include
@@ -60,11 +60,12 @@
                 android:layout_width="84dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:inputType="numberDecimal"
                 android:maxLength="7"
                 android:maxLines="1"
-                android:inputType="numberDecimal"
                 android:text="@={viewModel.mTargetPrice}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:addTextChangedListener="@{viewModel.priceWatcher}"
                 app:error="@{viewModel.mTargetPriceError}"
                 />
           </android.support.design.widget.TextInputLayout>
@@ -114,6 +115,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
+              android:text="@{viewModel.mAccountAsset}"
               tools:text="200.00"
               />
 
@@ -144,11 +146,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:ellipsize="end"
+                android:inputType="numberDecimal"
                 android:maxLength="7"
                 android:maxLines="1"
-                android:inputType="numberDecimal"
                 android:text="@={viewModel.mCoinAmount}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:addTextChangedListener="@{viewModel.amountWatcher}"
                 app:error="@{viewModel.mCoinAmountError}"
                 />
           </android.support.design.widget.TextInputLayout>

@@ -1,6 +1,8 @@
 package com.zac4j.zwallet.util;
 
 import android.support.v4.util.Pair;
+import java.io.Closeable;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.List;
 
@@ -59,6 +61,16 @@ public class Utils {
       return sb.toString().toLowerCase();
     } catch (Exception exc) {
       return "";
+    }
+  }
+
+  public static void close(Closeable closeable) {
+    if (closeable != null) {
+      try {
+        closeable.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 }
