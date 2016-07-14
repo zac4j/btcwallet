@@ -73,7 +73,7 @@ public class CoinTradeViewModel implements ViewModel {
     mAssetLabel = new ObservableField<>(defaultAssetLabel);
     mCoinAmount = new ObservableField<>();
     mCoinAmountError = new ObservableField<>();
-    mTradeFee = new ObservableField<>();
+    mTradeFee = new ObservableField<>("￥0.00");
     mTotalPayment = new ObservableField<>();
     mCoinTradeBtnLabel = new ObservableField<>();
 
@@ -156,7 +156,7 @@ public class CoinTradeViewModel implements ViewModel {
   public void onTradeClick(View view) {
     boolean isValid = checkInputsValid();
     if (isValid) {
-
+      trade(mTargetPrice.get(), mCoinAmount.get(), mTradeType);
     }
   }
 
@@ -191,7 +191,7 @@ public class CoinTradeViewModel implements ViewModel {
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, methodName);
     Pair<String, String> createdTimePair = new Pair<>(Constants.CREATED_TIME, time);
     Pair<String, String> coinTypePair = new Pair<>(Constants.COIN_TYPE, String.valueOf(coinType));
-    Pair<String, String> pricePair = new Pair<>(Constants.COIN_AMOUNT, price);
+    Pair<String, String> pricePair = new Pair<>(Constants.PRICE, price);
     Pair<String, String> amountPair = new Pair<>(Constants.COIN_AMOUNT, amount);
 
     parameterPairs.add(amountPair);

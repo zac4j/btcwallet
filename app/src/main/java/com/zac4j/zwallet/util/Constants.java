@@ -9,6 +9,7 @@ public class Constants {
 
   public static final String CURRENT_SELECT_COIN = "current_coin";
 
+  public static final String ID = "&id=";
   public static final String COIN_TYPE = "&coin_type=";
   public static final String CREATED_TIME = "&created=";
   public static final String METHOD_NAME = "&method=";

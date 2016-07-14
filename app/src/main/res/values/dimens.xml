@@ -3,6 +3,8 @@
   <dimen name="activity_horizontal_margin">16dp</dimen>
   <dimen name="activity_vertical_margin">16dp</dimen>
 
+  <dimen name="width_price_display">180dp</dimen>
+
   <!--height-->
   <dimen name="header_height_nav">192dp</dimen>
   <dimen name="header_height_main">164dp</dimen>

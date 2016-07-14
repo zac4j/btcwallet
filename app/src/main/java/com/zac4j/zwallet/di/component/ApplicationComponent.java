@@ -12,6 +12,7 @@ import com.zac4j.zwallet.di.module.ApplicationModule;
 import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
 import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
+import com.zac4j.zwallet.viewmodel.OrderDetailViewModel;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -23,9 +24,10 @@ import javax.inject.Singleton;
 @Singleton @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
 
-  void inject(MainViewModel mainViewModel);
-  void inject(MyWalletViewModel sendMyWalletViewModel);
-  void inject(CoinTradeViewModel coinTradeViewModel);
+  void inject(MainViewModel viewModel);
+  void inject(MyWalletViewModel viewModel);
+  void inject(CoinTradeViewModel viewModel);
+  void inject(OrderDetailViewModel viewModel);
 
   @ApplicationContext Context context();
   PreferencesHelper prefsHelper();

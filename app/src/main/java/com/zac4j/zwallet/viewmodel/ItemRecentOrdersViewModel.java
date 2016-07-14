@@ -2,12 +2,15 @@ package com.zac4j.zwallet.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.util.Utils;
+import com.zac4j.zwallet.view.OrderDetailDialogFragment;
 import java.text.NumberFormat;
 
 /**
@@ -71,9 +74,9 @@ public class ItemRecentOrdersViewModel extends BaseObservable implements ViewMod
     formatter.setMaximumFractionDigits(4);
     String totalTxt = formatter.format(total);
     if ("1".equals(mDealOrder.getType())) {
-      return "- " + totalTxt;
+      return "- ￥" + totalTxt;
     } else {
-      return totalTxt;
+      return "￥" + totalTxt;
     }
   }
 
@@ -88,8 +91,13 @@ public class ItemRecentOrdersViewModel extends BaseObservable implements ViewMod
   }
 
   public void onItemClick(View view) {
-    // TODO jump to order detail page e.g getOrderInfo...
+    OrderDetailDialogFragment dialogFragment =
+        OrderDetailDialogFragment.newInstance(mDealOrder.getId(),
+            mDealOrder.getLastProcessedTime());
+    FragmentManager fragmentMgr = ((AppCompatActivity) mContext).getSupportFragmentManager();
+    dialogFragment.show(fragmentMgr);
   }
 
-  @Override public void destroy() {}
+  @Override public void destroy() {
+  }
 }

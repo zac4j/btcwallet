@@ -63,6 +63,7 @@ import rx.Single;
 
   /**
    * 买入/卖出
+   *
    * @param methodName buy 买入/sell 卖出
    * @param targetPrice 目标价格
    * @param amount 交易数量
@@ -73,7 +74,14 @@ import rx.Single;
       @Field("price") String targetPrice, @Field("amount") String amount,
       @Field("created") String created, @Field("sign") String sign);
 
-
+  /**
+   *取消订单
+   *
+   * @return success 表示成功取消订单
+   */
+  @FormUrlEncoded @POST(".") Single<TradeResponse> cancelOrder(@Field("method") String methodName,
+      @Field("access_key") String accessKey, @Field("coin_type") int coinType,
+      @Field("id") String orderId, @Field("created") String created, @Field("sign") String sign);
 
   class Creator {
     @Inject public WebService create(HttpClient client) {

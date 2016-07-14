@@ -5,7 +5,8 @@
     <item>bits</item>
   </string-array>
   <string-array name="payment_method">
-    <item>Bank</item>
+    <item>CNY Wallet</item>
+    <item>Bank Account</item>
     <item>Alipay</item>
   </string-array>
   <string-array name="deposit">
@@ -15,5 +16,22 @@
   <string-array name="repeat_frequency">
     <item>week</item>
     <item>month</item>
+  </string-array>
+  <string-array name="order_status">
+    <item>UNSETTLED</item>
+    <item>PARTIAL</item>
+    <item>COMPLETE</item>
+    <item>CANCEL</item>
+    <item>DISCARD</item>
+    <item>EXCEPTION</item>
+    <item>CANCEL</item>
+    <item>QUEUE</item>
+  </string-array>
+  <string-array name="status_color">
+    <item>@color/gray</item>
+    <item>@color/deep_orange</item>
+    <item>@color/green</item>
+    <item>@color/red</item>
+    <item>@color/blue_gray</item>
   </string-array>
 </resources>

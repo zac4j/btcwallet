@@ -11,11 +11,14 @@
   <string name="menu_title_account">ACCOUNTS</string>
   <string name="menu_accounts_wallet">Wallet</string>
   <string name="menu_accounts_vault">Vault</string>
+  <string name="menu_traction_pending">Pending</string>
+  <string name="menu_traction_process">Processed</string>
   <string name="menu_title_more">MORE</string>
   <string name="menu_coin_ltc">LiteCoin</string>
   <string name="menu_coin_btc">BitCoin</string>
 
   <!--Unit-->
+  <string name="unit_price">￥ %s</string>
   <string name="unit_btc">%s bits</string>
   <string name="unit_ltc">%s lits</string>
 
@@ -55,6 +58,12 @@
   <string name="coin_trade_cost_fee_label">Fee</string>
   <string name="coin_trade_total_payment_label">Total</string>
   <string name="coin_trade_repeat_buy_hint">repeat this buy every </string>
+
+  <!--order detail-->
+  <string name="order_detail_price_amount">%1$s Per %2$s</string>
+  <string name="order_detail_label_subtotal">Subtotal</string>
+  <string name="order_detail_label_fee">HuoBi Fee</string>
+  <string name="order_detail_label_total">Total</string>
 
 </resources>
 

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.zac4j.zwallet.viewmodel.OrderDetailViewModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space.medium"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@color/green_light"
+          android:padding="@dimen/space.very_small"
+          android:text="@{viewModel.mOrderStatus}"
+          android:textColor="@color/white"
+          tools:text="COMPLETE"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:text="@{viewModel.mProcessTime}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          tools:text="Processed at 12, 2016"
+          />
+
+    </RelativeLayout>
+
+    <View style="@style/Divider"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@{viewModel.mTotalPayment}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:text="1,175.88 CNY"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@{viewModel.mPriceAmount}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="@string/order_detail_price_amount"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/space.small"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/order_detail_label_subtotal"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          />
+
+      <ProgressBar
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:visibility="gone"
+          app:visibility="@{viewModel.progressVisibility}"
+          style="?android:attr/progressBarStyleSmall"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:text="@{viewModel.mSubtotal}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          tools:text="￥12.7627"
+          />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/space.small"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/order_detail_label_fee"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_marginStart="@dimen/space.medium"
+          android:text="@{viewModel.mFee}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          tools:text="￥0"
+          />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/space.small"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/order_detail_label_total"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_marginStart="@dimen/space.medium"
+          android:text="@{viewModel.mTotal}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+          tools:text="￥0"
+          />
+
+    </RelativeLayout>
+
+  </LinearLayout>
+</layout>
