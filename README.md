@@ -1,8 +1,7 @@
 ## [HuoBi.com][huobi.com] unofficial Android client.
 
-- - -
-
-Rest API resource:[HuoBi API][rest-api]
+Rest API resource:
++ [HuoBi API][rest-api]
 
 Project Architecture:
 + MVVM
