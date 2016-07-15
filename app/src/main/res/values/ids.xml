@@ -8,6 +8,7 @@
   <item name="progress_bar" type="id"/>
   <item name="card_view" type="id"/>
   <item name="tab_layout" type="id"/>
+  <item name="swipe_refresh_layout" type="id"/>
   <item name="root_layout" type="id"/>
 
   <!--menu-->

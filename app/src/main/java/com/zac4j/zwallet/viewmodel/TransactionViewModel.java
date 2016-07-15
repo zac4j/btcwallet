@@ -51,7 +51,7 @@ public class TransactionViewModel implements ViewModel {
 
     mContext = context;
 
-    progressVisibility = new ObservableInt(View.GONE);
+    progressVisibility = new ObservableInt(View.VISIBLE);
     ordersVisibility = new ObservableInt(View.GONE);
     errorDisplayVisibility = new ObservableInt(View.GONE);
     errorDisplay = new ObservableField<>();
@@ -64,8 +64,6 @@ public class TransactionViewModel implements ViewModel {
   }
 
   public void getOrders(int transactionType) {
-    progressVisibility.set(View.VISIBLE);
-
     String methodName =
         transactionType == Transaction.PENDING ? GET_PENDING_ORDERS : GET_RECENT_ORDERS;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);

@@ -3,8 +3,8 @@ package com.zac4j.zwallet.view;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,28 +25,37 @@ import javax.inject.Inject;
  */
 
 public class TransactionActivity extends BaseActivity
-    implements TransactionViewModel.OnDataChangedListener {
+    implements TransactionViewModel.OnDataChangedListener, SwipeRefreshLayout.OnRefreshListener {
 
   static final String EXTRA_TRANS_TYPE = "trans_type";
 
   private OrderAdapter mOrderAdapter;
   @Inject TransactionViewModel mViewModel;
+  private int mTransactionType;
+  private ActivityTransactionBinding mBinding;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ActivityTransactionBinding binding =
-        DataBindingUtil.setContentView(this, R.layout.activity_transaction);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_transaction);
 
     getActivityComponent().inject(this);
 
-    int transactionType = getIntent().getIntExtra(EXTRA_TRANS_TYPE, -1);
+    mTransactionType = getIntent().getIntExtra(EXTRA_TRANS_TYPE, -1);
 
-    setupActionBar(binding.actionbar.toolbar, transactionType);
-    setupRecyclerView(binding.transactionOrderList);
+    setupSwipeLayout(mBinding.swipeRefreshLayout);
+    setupActionBar(mBinding.actionbar.toolbar, mTransactionType);
+    setupRecyclerView(mBinding.transactionOrderList);
 
     mViewModel.setOnDataChangedListener(this);
-    mViewModel.getOrders(transactionType);
-    binding.setViewModel(mViewModel);
+    mViewModel.getOrders(mTransactionType);
+    mBinding.setViewModel(mViewModel);
+  }
+
+  private void setupSwipeLayout(SwipeRefreshLayout swipeRefreshLayout) {
+    swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+        android.R.color.holo_green_light, android.R.color.holo_orange_light,
+        android.R.color.holo_red_light);
+    swipeRefreshLayout.setOnRefreshListener(this);
   }
 
   @Override protected void onDestroy() {
@@ -90,5 +99,10 @@ public class TransactionActivity extends BaseActivity
    */
   @Override public void onDataChanged(List<DealOrder> orderList) {
     mOrderAdapter.addAll(orderList);
+    mBinding.swipeRefreshLayout.setRefreshing(false);
+  }
+
+  @Override public void onRefresh() {
+    mViewModel.getOrders(mTransactionType);
   }
 }

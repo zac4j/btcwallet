@@ -29,6 +29,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.DealOrderVie
 
   public void addAll(List<DealOrder> dealOrderList) {
     mDealOrderList = dealOrderList;
+    notifyDataSetChanged();
   }
 
   @Override public DealOrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
