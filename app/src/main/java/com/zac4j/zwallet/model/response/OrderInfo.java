@@ -3,7 +3,7 @@ package com.zac4j.zwallet.model.response;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Order Detail Info
+ * DealOrder Detail Info
  * Created by zac on 16-7-5.
  */
 

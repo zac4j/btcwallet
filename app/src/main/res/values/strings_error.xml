@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <!--common-->
+  <string name="network_error">获取数据失败,请检查网络连接!</string>
+
   <!--send funds-->
   <string name="send_funds_address_null_error">收款账号不允许为空!</string>
   <string name="send_funds_amount_null_error">金额不允许为空!</string>
+
+  <!--transaction-->
+  <string name="empty_data">暂无交易数据</string>
 
 </resources>

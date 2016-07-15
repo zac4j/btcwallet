@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <variable
+        name="viewModel"
+        type="com.zac4j.zwallet.viewmodel.TransactionViewModel"
+        />
+  </data>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/include_actionbar"
+        android:id="@id/actionbar"
+        />
+
+    <ProgressBar
+        android:id="@id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:visibility="@{viewModel.progressVisibility}"
+        style="@style/Widget.AppCompat.ProgressBar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space.medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="@{viewModel.errorDisplay}"
+        app:visibility="@{viewModel.errorDisplayVisibility}"
+        android:layout_centerInParent="true"
+        tools:text="Empty List"
+        />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@id/transaction_order_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="@dimen/space.small"
+          app:visibility="@{viewModel.ordersVisibility}"
+          tools:listitem="@layout/list_item_order"
+          />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+  </RelativeLayout>
+</layout>

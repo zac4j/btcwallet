@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.databinding.ActivityCoinTradeBinding;
+import com.zac4j.zwallet.model.local.Trade;
 import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
 import javax.inject.Inject;
 
@@ -20,10 +21,7 @@ import javax.inject.Inject;
 
 public class CoinTradeActivity extends AppCompatActivity {
 
-  public static final String EXTRA_TRADE = "extra_trade";
-
-  public static final int TRADE_TYPE_BUY = 0xa1;
-  public static final int TRADE_TYPE_SELL = 0xa2;
+  static final String EXTRA_TRADE = "extra_trade";
 
   private int mTradeType;
   private ActivityCoinTradeBinding mBinding;
@@ -53,7 +51,7 @@ public class CoinTradeActivity extends AppCompatActivity {
   }
 
   private String getTradeTitle(int tradeType) {
-    return tradeType == TRADE_TYPE_BUY ? getString(R.string.menu_trade_buy)
+    return tradeType == Trade.BUY ? getString(R.string.menu_trade_buy)
         : getString(R.string.menu_trade_sell);
   }
 

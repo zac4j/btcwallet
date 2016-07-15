@@ -6,7 +6,7 @@
   <data>
     <variable
         name="viewModel"
-        type="com.zac4j.zwallet.viewmodel.ItemRecentOrdersViewModel"
+        type="com.zac4j.zwallet.viewmodel.ItemOrderViewModel"
         />
   </data>
 

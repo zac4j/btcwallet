@@ -5,7 +5,7 @@
 
     <item
         android:id="@id/action_dashboard"
-        android:icon="@drawable/ic_menu_dashboard"
+        android:icon="@drawable/ic_menu_chart"
         android:title="@string/menu_dashboard"
         />
 
@@ -37,6 +37,22 @@
               android:id="@id/action_account_vault"
               android:icon="@drawable/ic_menu_vault"
               android:title="@string/menu_accounts_vault"/>
+        </group>
+      </menu>
+    </item>
+
+    <item
+        android:title="@string/menu_title_transaction">
+      <menu>
+        <group android:checkableBehavior="single">
+          <item
+              android:id="@id/action_transaction_pend"
+              android:icon="@drawable/ic_menu_pending"
+              android:title="@string/menu_transaction_pending"/>
+          <item
+              android:id="@id/action_transaction_process"
+              android:icon="@drawable/ic_menu_processed"
+              android:title="@string/menu_transaction_processed"/>
         </group>
       </menu>
     </item>

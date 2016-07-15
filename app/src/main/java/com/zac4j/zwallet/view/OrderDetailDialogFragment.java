@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * Order Detail Dialog Fragment
+ * DealOrder Detail Dialog Fragment
  * Created by zac on 16-7-14.
  */
 

@@ -16,6 +16,8 @@
   <item name="action_trade_sell" type="id"/>
   <item name="action_account_wallet" type="id"/>
   <item name="action_account_vault" type="id"/>
+  <item name="action_transaction_pend" type="id"/>
+  <item name="action_transaction_process" type="id"/>
   <item name="action_settings" type="id"/>
   <item name="action_coin_switch" type="id"/>
 
@@ -51,5 +53,8 @@
 
   <!--trade-->
   <item name="trade_btn_action" type="id" />
+
+  <!--traction-->
+  <item name="transaction_order_list" type="id" />
 
 </resources>

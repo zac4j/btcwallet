@@ -14,15 +14,13 @@ import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.model.local.Trade;
 import com.zac4j.zwallet.model.response.TradeResponse;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.util.Utils;
-import com.zac4j.zwallet.view.CoinTradeActivity;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
@@ -95,15 +93,14 @@ public class CoinTradeViewModel implements ViewModel {
 
   private void updateLabels(int tradeType) {
     mCoinTradeLabel.set(getTradeLabel(tradeType));
-    String tradeActionLabel =
-        tradeType == CoinTradeActivity.TRADE_TYPE_BUY ? mContext.getString(R.string.menu_trade_buy)
-            : mContext.getString(R.string.menu_trade_sell);
+    String tradeActionLabel = tradeType == Trade.BUY ? mContext.getString(R.string.menu_trade_buy)
+        : mContext.getString(R.string.menu_trade_sell);
     mCoinTradeBtnLabel.set(tradeActionLabel);
   }
 
   private String getTradeLabel(int tradeType) {
-    return tradeType == CoinTradeActivity.TRADE_TYPE_BUY ? mContext.getString(
-        R.string.coin_trade_buy_label) : mContext.getString(R.string.coin_trade_sell_label);
+    return tradeType == Trade.BUY ? mContext.getString(R.string.coin_trade_buy_label)
+        : mContext.getString(R.string.coin_trade_sell_label);
   }
 
   /**
@@ -182,8 +179,7 @@ public class CoinTradeViewModel implements ViewModel {
 
   private void trade(String price, String amount, int tradeType) {
     progressVisibility.set(View.VISIBLE);
-    String methodName =
-        tradeType == CoinTradeActivity.TRADE_TYPE_BUY ? METHOD_NAME_BUY : METHOD_NAME_SELL;
+    String methodName = tradeType == Trade.BUY ? METHOD_NAME_BUY : METHOD_NAME_SELL;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     int coinType = mPrefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
 

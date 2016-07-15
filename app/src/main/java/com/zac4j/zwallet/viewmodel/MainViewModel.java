@@ -129,8 +129,6 @@ public class MainViewModel implements ViewModel {
   }
 
   private void getRecentOrders(String time) {
-    progressVisibility.set(View.VISIBLE);
-
     List<Pair<String, String>> parameterPairs = new ArrayList<>();
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, GET_RECENT_ORDERS);
     Pair<String, String> createdTimePair = new Pair<>(Constants.CREATED_TIME, time);
@@ -140,7 +138,7 @@ public class MainViewModel implements ViewModel {
     parameterPairs.add(createdTimePair);
     parameterPairs.add(methodNamePair);
 
-    mSubscription = mWebService.getRecentOrders(GET_RECENT_ORDERS, ACCESS_KEY, coinType, time,
+    mSubscription = mWebService.getOrders(GET_RECENT_ORDERS, ACCESS_KEY, coinType, time,
         Utils.generateSign(parameterPairs))
         .compose(RxUtils.<List<DealOrder>>applySchedulers())
         .subscribe(new Subscriber<List<DealOrder>>() {

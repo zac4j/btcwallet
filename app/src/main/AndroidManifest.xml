@@ -33,6 +33,11 @@
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustResize"
         />
+
+    <activity
+        android:name=".view.TransactionActivity"
+        android:screenOrientation="portrait"
+        />
   </application>
 
 </manifest>

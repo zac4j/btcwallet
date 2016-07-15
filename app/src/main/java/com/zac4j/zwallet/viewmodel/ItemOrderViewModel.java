@@ -17,12 +17,12 @@ import java.text.NumberFormat;
  * Main Recent Orders List Item ViewModel
  * Created by Zac on 2016/7/4.
  */
-public class ItemRecentOrdersViewModel extends BaseObservable implements ViewModel {
+public class ItemOrderViewModel extends BaseObservable implements ViewModel {
 
   private Context mContext;
   private DealOrder mDealOrder;
 
-  public ItemRecentOrdersViewModel(Context context, DealOrder dealOrder) {
+  public ItemOrderViewModel(Context context, DealOrder dealOrder) {
     mContext = context;
     mDealOrder = dealOrder;
   }

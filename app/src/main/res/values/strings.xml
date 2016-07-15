@@ -11,8 +11,9 @@
   <string name="menu_title_account">ACCOUNTS</string>
   <string name="menu_accounts_wallet">Wallet</string>
   <string name="menu_accounts_vault">Vault</string>
-  <string name="menu_traction_pending">Pending</string>
-  <string name="menu_traction_process">Processed</string>
+  <string name="menu_title_transaction">TRANSACTION</string>
+  <string name="menu_transaction_pending">Pending</string>
+  <string name="menu_transaction_processed">Processed</string>
   <string name="menu_title_more">MORE</string>
   <string name="menu_coin_ltc">LiteCoin</string>
   <string name="menu_coin_btc">BitCoin</string>

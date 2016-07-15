@@ -23,7 +23,7 @@ import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Order Detail View Model
+ * DealOrder Detail View Model
  * Created by zac on 16-7-14.
  */
 

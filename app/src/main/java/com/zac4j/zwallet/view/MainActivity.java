@@ -17,12 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
-import com.zac4j.zwallet.adapter.DealOrderAdapter;
+import com.zac4j.zwallet.adapter.OrderAdapter;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.databinding.ActivityMainBinding;
 import com.zac4j.zwallet.di.component.ActivityComponent;
 import com.zac4j.zwallet.di.component.DaggerActivityComponent;
 import com.zac4j.zwallet.di.module.ActivityModule;
+import com.zac4j.zwallet.model.local.Trade;
+import com.zac4j.zwallet.model.local.Transaction;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.view.widget.DividerItemDecoration;
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   private void setupRecyclerView(RecyclerView recyclerView) {
-    DealOrderAdapter adapter = new DealOrderAdapter();
+    OrderAdapter adapter = new OrderAdapter();
     recyclerView.setAdapter(adapter);
     recyclerView.addItemDecoration(
         new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
@@ -119,14 +121,22 @@ public class MainActivity extends AppCompatActivity
     switch (item.getItemId()) {
       case R.id.action_trade_buy:
         startActivity(new Intent(MainActivity.this, CoinTradeActivity.class).putExtra(
-            CoinTradeActivity.EXTRA_TRADE, CoinTradeActivity.TRADE_TYPE_BUY));
+            CoinTradeActivity.EXTRA_TRADE, Trade.BUY));
         break;
       case R.id.action_trade_sell:
         startActivity(new Intent(MainActivity.this, CoinTradeActivity.class).putExtra(
-            CoinTradeActivity.EXTRA_TRADE, CoinTradeActivity.TRADE_TYPE_SELL));
+            CoinTradeActivity.EXTRA_TRADE, Trade.SELL));
         break;
       case R.id.action_account_wallet:
         startActivity(new Intent(MainActivity.this, MyWalletActivity.class));
+        break;
+      case R.id.action_transaction_pend:
+        startActivity(new Intent(MainActivity.this, TransactionActivity.class).putExtra(
+            TransactionActivity.EXTRA_TRANS_TYPE, Transaction.PENDING));
+        break;
+      case R.id.action_transaction_process:
+        startActivity(new Intent(MainActivity.this, TransactionActivity.class).putExtra(
+            TransactionActivity.EXTRA_TRANS_TYPE, Transaction.PROCESSED));
         break;
     }
 
@@ -136,7 +146,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public void onGetRecentOrders(List<DealOrder> dealOrderList) {
-    DealOrderAdapter adapter = (DealOrderAdapter) mBinding.mainRvOrderList.getAdapter();
+    OrderAdapter adapter = (OrderAdapter) mBinding.mainRvOrderList.getAdapter();
     adapter.addAll(dealOrderList);
     adapter.notifyDataSetChanged();
   }

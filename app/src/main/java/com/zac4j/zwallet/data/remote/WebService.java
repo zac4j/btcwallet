@@ -5,15 +5,12 @@ import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.model.response.OrderInfo;
 import com.zac4j.zwallet.model.response.TradeResponse;
 import java.util.List;
-import java.util.Map;
-import javax.annotation.meta.TypeQualifierDefault;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Single;
@@ -41,12 +38,12 @@ import rx.Single;
       @Field("sign") String sign);
 
   /**
-   * 查询个人最新10条成交订单
-   *
+   * 查询订单
+   * @param methodName 1.get_new_deal_orders 个人最新10条成交 2.get_orders 正在进行的委托
    * @param coinType coin type 1 比特币 2 莱特币
    * @return 个人最新10条成交订单
    */
-  @FormUrlEncoded @POST(".") Single<List<DealOrder>> getRecentOrders(
+  @FormUrlEncoded @POST(".") Single<List<DealOrder>> getOrders(
       @Field("method") String methodName, @Field("access_key") String accessKey,
       @Field("coin_type") int coinType, @Field("created") String created,
       @Field("sign") String sign);
