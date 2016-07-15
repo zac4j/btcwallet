@@ -46,7 +46,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_centerVertical="true"
-              android:text="@{viewModel.mCoinTradeLabel}"
+              android:text="@{viewModel.coinTradeLabel}"
               android:textAppearance="@style/TextAppearance.AppCompat.Title"
               tools:text="@string/coin_trade_buy_label"
               />
@@ -64,10 +64,10 @@
                 android:inputType="numberDecimal"
                 android:maxLength="7"
                 android:maxLines="1"
-                android:text="@={viewModel.mTargetPrice}"
+                android:text="@={viewModel.targetPrice}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:addTextChangedListener="@{viewModel.priceWatcher}"
-                app:error="@{viewModel.mTargetPriceError}"
+                app:error="@{viewModel.targetPriceError}"
                 />
           </android.support.design.widget.TextInputLayout>
 
@@ -107,7 +107,7 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@{viewModel.mAssetLabel}"
+              android:text="@{viewModel.assetLabel}"
               android:textAppearance="@style/TextAppearance.AppCompat.Body1"
               tools:text="@string/coin_trade_money_cny_label"
               />
@@ -116,7 +116,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
-              android:text="@{viewModel.mAccountAsset}"
+              android:text="@{viewModel.accountAsset}"
               tools:text="200.00"
               />
 
@@ -150,10 +150,10 @@
                 android:inputType="numberDecimal"
                 android:maxLength="7"
                 android:maxLines="1"
-                android:text="@={viewModel.mCoinAmount}"
+                android:text="@={viewModel.coinAmount}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:addTextChangedListener="@{viewModel.amountWatcher}"
-                app:error="@{viewModel.mCoinAmountError}"
+                app:error="@{viewModel.coinAmountError}"
                 />
           </android.support.design.widget.TextInputLayout>
 
@@ -211,7 +211,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
-              android:text="@{viewModel.mTradeFee}"
+              android:text="@{viewModel.tradeFee}"
               android:textAppearance="@style/TextAppearance.AppCompat.Body1"
               tools:text="￥5.00"
               />
@@ -235,7 +235,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
-              android:text="@{viewModel.mTotalPayment}"
+              android:text="@{viewModel.totalPayment}"
               android:textAppearance="@style/TextAppearance.AppCompat.Body1"
               tools:text="￥200.00"
               />
@@ -281,7 +281,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/space.small"
         android:onClick="@{viewModel::onTradeClick}"
-        android:text="@{viewModel.mCoinTradeBtnLabel}"
+        android:text="@{viewModel.coinTradeBtnLabel}"
         style="@style/Widget.AppCompat.Button.Colored"
         />
   </RelativeLayout>

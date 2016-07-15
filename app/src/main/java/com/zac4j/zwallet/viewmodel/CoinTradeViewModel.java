@@ -40,16 +40,16 @@ public class CoinTradeViewModel implements ViewModel {
   private int mTradeType;
 
   public ObservableInt progressVisibility;
-  public ObservableField<String> mCoinTradeLabel;
-  public ObservableField<String> mTargetPrice;
-  public ObservableField<String> mTargetPriceError;
-  public ObservableField<String> mAssetLabel;
-  public ObservableField<String> mAccountAsset;
-  public ObservableField<String> mCoinAmount;
-  public ObservableField<String> mCoinAmountError;
-  public ObservableField<String> mTradeFee;
-  public ObservableField<String> mTotalPayment;
-  public ObservableField<String> mCoinTradeBtnLabel;
+  public ObservableField<String> coinTradeLabel;
+  public ObservableField<String> targetPrice;
+  public ObservableField<String> targetPriceError;
+  public ObservableField<String> assetLabel;
+  public ObservableField<String> accountAsset;
+  public ObservableField<String> coinAmount;
+  public ObservableField<String> coinAmountError;
+  public ObservableField<String> tradeFee;
+  public ObservableField<String> totalPayment;
+  public ObservableField<String> coinTradeBtnLabel;
 
   @Inject WebService mWebService;
   @Inject PreferencesHelper mPrefsHelper;
@@ -62,17 +62,17 @@ public class CoinTradeViewModel implements ViewModel {
 
     progressVisibility = new ObservableInt(View.GONE);
     String defaultCoinTrade = mContext.getString(R.string.coin_trade_buy_label);
-    mCoinTradeLabel = new ObservableField<>(defaultCoinTrade);
-    mTargetPrice = new ObservableField<>();
-    mTargetPriceError = new ObservableField<>();
+    coinTradeLabel = new ObservableField<>(defaultCoinTrade);
+    targetPrice = new ObservableField<>();
+    targetPriceError = new ObservableField<>();
     String defaultAssetLabel = mContext.getString(R.string.coin_trade_money_cny_label);
-    mAccountAsset = new ObservableField<>(defaultAssetLabel);
-    mAssetLabel = new ObservableField<>(defaultAssetLabel);
-    mCoinAmount = new ObservableField<>();
-    mCoinAmountError = new ObservableField<>();
-    mTradeFee = new ObservableField<>("￥0.00");
-    mTotalPayment = new ObservableField<>();
-    mCoinTradeBtnLabel = new ObservableField<>();
+    accountAsset = new ObservableField<>(defaultAssetLabel);
+    assetLabel = new ObservableField<>(defaultAssetLabel);
+    coinAmount = new ObservableField<>();
+    coinAmountError = new ObservableField<>();
+    tradeFee = new ObservableField<>("￥0.00");
+    totalPayment = new ObservableField<>();
+    coinTradeBtnLabel = new ObservableField<>();
 
     mSubscription = mAccountDao.getCNYAsset().map(new Func1<String, String>() {
       @Override public String call(String s) {
@@ -80,7 +80,7 @@ public class CoinTradeViewModel implements ViewModel {
       }
     }).compose(RxUtils.<String>applySchedulers()).subscribe(new Action1<String>() {
       @Override public void call(String s) {
-        mAccountAsset.set(s);
+        accountAsset.set(s);
       }
     });
   }
@@ -91,10 +91,10 @@ public class CoinTradeViewModel implements ViewModel {
   }
 
   private void updateLabels(int tradeType) {
-    mCoinTradeLabel.set(getTradeLabel(tradeType));
+    coinTradeLabel.set(getTradeLabel(tradeType));
     String tradeActionLabel = tradeType == Trade.BUY ? mContext.getString(R.string.menu_trade_buy)
         : mContext.getString(R.string.menu_trade_sell);
-    mCoinTradeBtnLabel.set(tradeActionLabel);
+    coinTradeBtnLabel.set(tradeActionLabel);
   }
 
   private String getTradeLabel(int tradeType) {
@@ -142,8 +142,8 @@ public class CoinTradeViewModel implements ViewModel {
   }
 
   private void clearError() {
-    mTargetPriceError.set(null);
-    mCoinAmountError.set(null);
+    targetPriceError.set(null);
+    coinAmountError.set(null);
   }
 
   /**
@@ -152,20 +152,20 @@ public class CoinTradeViewModel implements ViewModel {
   public void onTradeClick(View view) {
     boolean isValid = checkInputsValid();
     if (isValid) {
-      trade(mTargetPrice.get(), mCoinAmount.get(), mTradeType);
+      trade(targetPrice.get(), coinAmount.get(), mTradeType);
     }
   }
 
   private boolean checkInputsValid() {
     boolean isValid = true;
 
-    if (TextUtils.isEmpty(mTargetPrice.get())) {
-      mTargetPriceError.set("目标价格不能为空!");
+    if (TextUtils.isEmpty(targetPrice.get())) {
+      targetPriceError.set("目标价格不能为空!");
       isValid = false;
     }
 
-    if (TextUtils.isEmpty(mCoinAmount.get())) {
-      mCoinAmountError.set("目标数量不能为空!");
+    if (TextUtils.isEmpty(coinAmount.get())) {
+      coinAmountError.set("目标数量不能为空!");
       isValid = false;
     }
 

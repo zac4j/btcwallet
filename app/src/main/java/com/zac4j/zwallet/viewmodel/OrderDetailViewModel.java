@@ -33,16 +33,16 @@ public class OrderDetailViewModel implements ViewModel {
   private Context mContext;
 
   public ObservableInt progressVisibility;
-  public ObservableField<String> mOrderStatus;
-  public ObservableField<String> mProcessTime;
-  public ObservableField<String> mTotalPayment;
-  public ObservableField<String> mPriceAmount;
-  public ObservableField<String> mSubtotal;
-  public ObservableField<String> mFee;
-  public ObservableField<String> mTotal;
+  public ObservableField<String> orderStatus;
+  public ObservableField<String> processTime;
+  public ObservableField<String> totalPayment;
+  public ObservableField<String> priceAmount;
+  public ObservableField<String> subtotal;
+  public ObservableField<String> fee;
+  public ObservableField<String> total;
 
   private Subscription mSubscription;
-  private String[] orderStatus;
+  private String[] mOrderStatus;
 
   @Inject WebService mWebService;
   @Inject PreferencesHelper mPrefsHelper;
@@ -52,21 +52,21 @@ public class OrderDetailViewModel implements ViewModel {
     mContext = context;
 
     progressVisibility = new ObservableInt(View.VISIBLE);
-    mOrderStatus = new ObservableField<>();
-    mProcessTime = new ObservableField<>();
-    mTotalPayment = new ObservableField<>();
-    mPriceAmount = new ObservableField<>();
-    mSubtotal = new ObservableField<>();
-    mFee = new ObservableField<>();
-    mTotal = new ObservableField<>();
+    orderStatus = new ObservableField<>();
+    processTime = new ObservableField<>();
+    totalPayment = new ObservableField<>();
+    priceAmount = new ObservableField<>();
+    subtotal = new ObservableField<>();
+    fee = new ObservableField<>();
+    total = new ObservableField<>();
 
     App.get(mContext).getApplicationComponent().inject(this);
 
-    orderStatus = mContext.getResources().getStringArray(R.array.order_status);
+    mOrderStatus = mContext.getResources().getStringArray(R.array.order_status);
   }
 
   public void setProcessTime(String time) {
-    mProcessTime.set(time);
+    processTime.set(time);
   }
 
   public void getOrderDetail(final String orderId) {
@@ -100,21 +100,21 @@ public class OrderDetailViewModel implements ViewModel {
           }
 
           @Override public void onNext(OrderInfo orderInfo) {
-            mOrderStatus.set(orderStatus[orderInfo.getStatus()]);
-            String totalPayment = mContext.getString(R.string.unit_price, orderInfo.getTotal());
-            mTotalPayment.set(totalPayment);
+            orderStatus.set(mOrderStatus[orderInfo.getStatus()]);
+            String payment = mContext.getString(R.string.unit_price, orderInfo.getTotal());
+            totalPayment.set(payment);
 
             String amount = mContext.getString(
                 coinType == Constants.COIN_TYPE_LTC ? R.string.unit_ltc : R.string.unit_btc,
                 orderInfo.getProcessedAmount());
             String price = mContext.getString(R.string.unit_price, orderInfo.getProcessedPrice());
-            String priceAmount =
+            String pm =
                 mContext.getString(R.string.order_detail_price_amount, amount, price);
-            mPriceAmount.set(priceAmount);
+            priceAmount.set(pm);
 
-            mSubtotal.set(mContext.getString(R.string.unit_price, orderInfo.getVot()));
-            mFee.set(mContext.getString(R.string.unit_price, orderInfo.getFee()));
-            mTotal.set(mContext.getString(R.string.unit_price, orderInfo.getTotal()));
+            subtotal.set(mContext.getString(R.string.unit_price, orderInfo.getVot()));
+            fee.set(mContext.getString(R.string.unit_price, orderInfo.getFee()));
+            total.set(mContext.getString(R.string.unit_price, orderInfo.getTotal()));
           }
         });
   }

@@ -28,7 +28,7 @@
           android:layout_height="wrap_content"
           android:background="@color/green_light"
           android:padding="@dimen/space.very_small"
-          android:text="@{viewModel.mOrderStatus}"
+          android:text="@{viewModel.orderStatus}"
           android:textColor="@color/white"
           tools:text="COMPLETE"
           />
@@ -39,7 +39,7 @@
           android:layout_alignParentEnd="true"
           android:ellipsize="end"
           android:maxLines="1"
-          android:text="@{viewModel.mProcessTime}"
+          android:text="@{viewModel.processTime}"
           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
           tools:text="Processed at 12, 2016"
           />
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@{viewModel.mTotalPayment}"
+        android:text="@{viewModel.totalPayment}"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         tools:text="1,175.88 CNY"
         />
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@{viewModel.mPriceAmount}"
+        android:text="@{viewModel.priceAmount}"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="@string/order_detail_price_amount"
         />
@@ -93,7 +93,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
-          android:text="@{viewModel.mSubtotal}"
+          android:text="@{viewModel.subtotal}"
           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
           tools:text="￥12.7627"
           />
@@ -119,7 +119,7 @@
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
           android:layout_marginStart="@dimen/space.medium"
-          android:text="@{viewModel.mFee}"
+          android:text="@{viewModel.fee}"
           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
           tools:text="￥0"
           />
@@ -145,7 +145,7 @@
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
           android:layout_marginStart="@dimen/space.medium"
-          android:text="@{viewModel.mTotal}"
+          android:text="@{viewModel.total}"
           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
           tools:text="￥0"
           />
