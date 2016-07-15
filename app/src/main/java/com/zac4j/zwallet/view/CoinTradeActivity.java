@@ -19,18 +19,20 @@ import javax.inject.Inject;
  * Created by zac on 16-7-11.
  */
 
-public class CoinTradeActivity extends AppCompatActivity {
+public class CoinTradeActivity extends BaseActivity {
 
   static final String EXTRA_TRADE = "extra_trade";
 
   private int mTradeType;
   private ActivityCoinTradeBinding mBinding;
-  private CoinTradeViewModel mViewModel;
+  @Inject CoinTradeViewModel mViewModel;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_coin_trade);
-    mViewModel = new CoinTradeViewModel(this);
+
+    getActivityComponent().inject(this);
+
     mBinding.setViewModel(mViewModel);
 
     mTradeType = getIntent().getIntExtra(EXTRA_TRADE, 0);

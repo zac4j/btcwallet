@@ -11,6 +11,7 @@ import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.di.ActivityContext;
 import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.util.Constants;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -30,7 +32,6 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
  * Main page view model
  * Created by zac on 16-7-3.
  */
-
 public class MainViewModel implements ViewModel {
 
   private static final String GET_ACCOUNT_INFO = "get_account_info";
@@ -60,7 +61,7 @@ public class MainViewModel implements ViewModel {
     mDataChangedListener = listener;
   }
 
-  public MainViewModel(Context context) {
+  @Inject public MainViewModel(@ActivityContext Context context) {
     mContext = context;
     progressVisibility = new ObservableInt(View.INVISIBLE);
     ordersVisibility = new ObservableInt(View.INVISIBLE);

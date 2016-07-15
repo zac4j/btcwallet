@@ -31,7 +31,6 @@ import rx.functions.Func1;
  * Coin Trade view model
  * Created by zac on 16-7-9.
  */
-
 public class CoinTradeViewModel implements ViewModel {
   private static final String METHOD_NAME_BUY = "buy";
   private static final String METHOD_NAME_SELL = "sell";
@@ -56,7 +55,7 @@ public class CoinTradeViewModel implements ViewModel {
   @Inject PreferencesHelper mPrefsHelper;
   @Inject AccountDao mAccountDao;
 
-  public CoinTradeViewModel(Context context) {
+  @Inject public CoinTradeViewModel(Context context) {
     this.mContext = context;
 
     App.get(context).getApplicationComponent().inject(this);

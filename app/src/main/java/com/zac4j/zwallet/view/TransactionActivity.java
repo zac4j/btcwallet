@@ -17,35 +17,44 @@ import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.view.widget.DividerItemDecoration;
 import com.zac4j.zwallet.viewmodel.TransactionViewModel;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Transaction (pending/processed) UI
  * Created by zac on 16-7-15.
  */
 
-public class TransactionActivity extends AppCompatActivity
+public class TransactionActivity extends BaseActivity
     implements TransactionViewModel.OnDataChangedListener {
 
   static final String EXTRA_TRANS_TYPE = "trans_type";
 
-  private int transactionType;
   private OrderAdapter mOrderAdapter;
+  @Inject TransactionViewModel mViewModel;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ActivityTransactionBinding binding =
         DataBindingUtil.setContentView(this, R.layout.activity_transaction);
 
-    transactionType = getIntent().getIntExtra(EXTRA_TRANS_TYPE, -1);
-    TransactionViewModel viewModel = new TransactionViewModel(this, transactionType);
-    binding.setViewModel(viewModel);
-    viewModel.setOnDataChangedListener(this);
+    getActivityComponent().inject(this);
 
-    setupActionBar(binding.actionbar.toolbar);
+    int transactionType = getIntent().getIntExtra(EXTRA_TRANS_TYPE, -1);
+
+    setupActionBar(binding.actionbar.toolbar, transactionType);
     setupRecyclerView(binding.transactionOrderList);
+
+    mViewModel.setOnDataChangedListener(this);
+    mViewModel.getOrders(transactionType);
+    binding.setViewModel(mViewModel);
   }
 
-  private void setupActionBar(Toolbar toolbar) {
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    mViewModel.destroy();
+  }
+
+  private void setupActionBar(Toolbar toolbar, int transactionType) {
     setSupportActionBar(toolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {

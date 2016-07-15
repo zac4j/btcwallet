@@ -11,23 +11,31 @@ import android.view.MenuItem;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.databinding.ActivityMyWalletBinding;
 import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
+import javax.inject.Inject;
 
 /**
  * Send Funds Activity
  * Created by Zac on 2016/7/5.
  */
-public class MyWalletActivity extends AppCompatActivity {
+public class MyWalletActivity extends BaseActivity {
 
   private ActivityMyWalletBinding mBinding;
-  private MyWalletViewModel mViewModel;
+  @Inject MyWalletViewModel mViewModel;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_wallet);
-    mViewModel = new MyWalletViewModel(this);
-    mBinding.setViewModel(mViewModel);
+
     setupActionBar(mBinding.actionbar.toolbar);
     setupTabLayout(mBinding.tabLayout);
+
+    getActivityComponent().inject(this);
+    mBinding.setViewModel(mViewModel);
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    mViewModel.destroy();
   }
 
   private void setupTabLayout(TabLayout tabLayout) {

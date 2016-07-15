@@ -27,8 +27,8 @@ import rx.Subscription;
 
 public class TransactionViewModel implements ViewModel {
 
-  public static final String GET_RECENT_ORDERS = "get_new_deal_orders";
-  public static final String GET_PENDING_ORDERS = "get_orders";
+  private static final String GET_RECENT_ORDERS = "get_new_deal_orders";
+  private static final String GET_PENDING_ORDERS = "get_orders";
 
   public interface OnDataChangedListener {
     void onDataChanged(List<DealOrder> orderList);
@@ -47,7 +47,7 @@ public class TransactionViewModel implements ViewModel {
   @Inject WebService mWebService;
   @Inject PreferencesHelper mPrefsHelper;
 
-  public TransactionViewModel(Context context, int transactionType) {
+  @Inject public TransactionViewModel(Context context) {
 
     mContext = context;
 
@@ -57,19 +57,17 @@ public class TransactionViewModel implements ViewModel {
     errorDisplay = new ObservableField<>();
 
     App.get(mContext).getApplicationComponent().inject(this);
-
-    getOrders(transactionType);
   }
 
   public void setOnDataChangedListener(OnDataChangedListener listener) {
     mListener = listener;
   }
 
-  private void getOrders(int mTransactionType) {
+  public void getOrders(int transactionType) {
     progressVisibility.set(View.VISIBLE);
 
     String methodName =
-        mTransactionType == Transaction.PENDING ? GET_PENDING_ORDERS : GET_RECENT_ORDERS;
+        transactionType == Transaction.PENDING ? GET_PENDING_ORDERS : GET_RECENT_ORDERS;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     int coinType = mPrefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
 

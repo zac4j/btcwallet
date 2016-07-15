@@ -32,30 +32,29 @@ import com.zac4j.zwallet.viewmodel.MainViewModel;
 import java.util.List;
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener,
     MainViewModel.OnDataChangedListener {
 
   private DrawerLayout mDrawerLayout;
   private NavigationView mNavigationView;
-  private MainViewModel mViewModel;
   private ActivityMainBinding mBinding;
   private MenuItem mCoinSwitchItem;
-  private ActivityComponent mActivityComponent;
 
   @Inject PreferencesHelper mPrefsHelper;
+  @Inject MainViewModel mViewModel;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-    mViewModel = new MainViewModel(this);
+
+    getActivityComponent().inject(this);
+
     mBinding.setViewModel(mViewModel);
     setupDrawer(mBinding);
     setupActionBar(mBinding.toolbar);
     setupRecyclerView(mBinding.mainRvOrderList);
     mViewModel.setOnDataChangedListener(this);
-
-    getActivityComponent().inject(this);
   }
 
   private void setupRecyclerView(RecyclerView recyclerView) {
@@ -149,15 +148,5 @@ public class MainActivity extends AppCompatActivity
     OrderAdapter adapter = (OrderAdapter) mBinding.mainRvOrderList.getAdapter();
     adapter.addAll(dealOrderList);
     adapter.notifyDataSetChanged();
-  }
-
-  public ActivityComponent getActivityComponent() {
-    if (mActivityComponent == null) {
-      mActivityComponent = DaggerActivityComponent.builder()
-          .applicationComponent(App.get(this).getApplicationComponent())
-          .activityModule(new ActivityModule(this))
-          .build();
-    }
-    return mActivityComponent;
   }
 }

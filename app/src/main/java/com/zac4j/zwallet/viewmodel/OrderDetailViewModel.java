@@ -47,7 +47,7 @@ public class OrderDetailViewModel implements ViewModel {
   @Inject WebService mWebService;
   @Inject PreferencesHelper mPrefsHelper;
 
-  public OrderDetailViewModel(Context context, String orderId) {
+  @Inject public OrderDetailViewModel(Context context) {
 
     mContext = context;
 
@@ -63,14 +63,13 @@ public class OrderDetailViewModel implements ViewModel {
     App.get(mContext).getApplicationComponent().inject(this);
 
     orderStatus = mContext.getResources().getStringArray(R.array.order_status);
-    getOrderDetail(orderId);
   }
 
   public void setProcessTime(String time) {
     mProcessTime.set(time);
   }
 
-  private void getOrderDetail(final String orderId) {
+  public void getOrderDetail(final String orderId) {
 
     String methodName = METHOD_GET_ORDER_INFO;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);

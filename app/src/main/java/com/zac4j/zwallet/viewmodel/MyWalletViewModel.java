@@ -35,7 +35,7 @@ public class MyWalletViewModel implements ViewModel {
 
   @Inject WebService mWebService;
 
-  public MyWalletViewModel(Context context) {
+  @Inject public MyWalletViewModel(Context context) {
     mContext = context;
 
     isSendFunds = new ObservableBoolean(true);
@@ -117,6 +117,9 @@ public class MyWalletViewModel implements ViewModel {
   }
 
   @Override public void destroy() {
-
+    if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+      mSubscription.unsubscribe();
+    }
   }
+
 }
