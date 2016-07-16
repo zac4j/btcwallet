@@ -19,23 +19,23 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 /**
- * DealOrder Detail Dialog Fragment
+ * Order Detail Dialog Fragment
  * Created by zac on 16-7-14.
  */
 
 public class OrderDetailDialogFragment extends DialogFragment {
 
   private static final String TAG = "OrderDetail";
-  private static final String EXTRA_PROCESS_TIME = "extra_time";
-  private static final String EXTRA_ORDER_ID = "extra_id";
+  private static final String ARGUMENT_PROCESS_TIME = "argument_time";
+  private static final String ARGUMENT_ORDER_ID = "argument_id";
 
   @Inject OrderDetailViewModel mViewModel;
 
   public static OrderDetailDialogFragment newInstance(String id, String processTime) {
     Bundle args = new Bundle();
     OrderDetailDialogFragment fragment = new OrderDetailDialogFragment();
-    args.putString(EXTRA_ORDER_ID, id);
-    args.putString(EXTRA_PROCESS_TIME, processTime);
+    args.putString(ARGUMENT_ORDER_ID, id);
+    args.putString(ARGUMENT_PROCESS_TIME, processTime);
     fragment.setArguments(args);
     return fragment;
   }
@@ -44,8 +44,8 @@ public class OrderDetailDialogFragment extends DialogFragment {
     String orderId = "";
     String processTime = "";
     if (getArguments() != null) {
-      String processTimeMills = getArguments().getString(EXTRA_PROCESS_TIME);
-      orderId = getArguments().getString(EXTRA_ORDER_ID);
+      String processTimeMills = getArguments().getString(ARGUMENT_PROCESS_TIME);
+      orderId = getArguments().getString(ARGUMENT_ORDER_ID);
       processTime = getFormatTime(processTimeMills);
     }
 
