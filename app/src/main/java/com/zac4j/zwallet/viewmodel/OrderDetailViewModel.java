@@ -5,19 +5,17 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.util.Pair;
 import android.view.View;
-import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.di.ApplicationContext;
+import com.zac4j.zwallet.di.PerConfig;
 import com.zac4j.zwallet.model.response.OrderInfo;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.util.Utils;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
@@ -26,11 +24,9 @@ import rx.Subscription;
  * DealOrder Detail View Model
  * Created by zac on 16-7-14.
  */
-
-public class OrderDetailViewModel implements ViewModel {
+@PerConfig public class OrderDetailViewModel implements ViewModel {
 
   private static final String METHOD_GET_ORDER_INFO = "order_info";
-  private Context mContext;
 
   public ObservableInt progressVisibility;
   public ObservableField<String> orderStatus;
@@ -44,12 +40,15 @@ public class OrderDetailViewModel implements ViewModel {
   private Subscription mSubscription;
   private String[] mOrderStatus;
 
-  @Inject WebService mWebService;
-  @Inject PreferencesHelper mPrefsHelper;
+  private Context mContext;
+  private WebService mWebService;
+  private PreferencesHelper mPrefsHelper;
 
-  @Inject public OrderDetailViewModel(Context context) {
-
+  @Inject OrderDetailViewModel(@ApplicationContext Context context, WebService webService,
+      PreferencesHelper prefsHelper) {
     mContext = context;
+    mWebService = webService;
+    mPrefsHelper = prefsHelper;
 
     progressVisibility = new ObservableInt(View.VISIBLE);
     orderStatus = new ObservableField<>();
@@ -59,8 +58,6 @@ public class OrderDetailViewModel implements ViewModel {
     subtotal = new ObservableField<>();
     fee = new ObservableField<>();
     total = new ObservableField<>();
-
-    App.get(mContext).getApplicationComponent().inject(this);
 
     mOrderStatus = mContext.getResources().getStringArray(R.array.order_status);
   }
@@ -108,8 +105,7 @@ public class OrderDetailViewModel implements ViewModel {
                 coinType == Constants.COIN_TYPE_LTC ? R.string.unit_ltc : R.string.unit_btc,
                 orderInfo.getProcessedAmount());
             String price = mContext.getString(R.string.unit_price, orderInfo.getProcessedPrice());
-            String pm =
-                mContext.getString(R.string.order_detail_price_amount, amount, price);
+            String pm = mContext.getString(R.string.order_detail_price_amount, amount, price);
             priceAmount.set(pm);
 
             subtotal.set(mContext.getString(R.string.unit_price, orderInfo.getVot()));
@@ -120,8 +116,6 @@ public class OrderDetailViewModel implements ViewModel {
   }
 
   @Override public void destroy() {
-    if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-      mSubscription.unsubscribe();
-    }
+    RxUtils.unsubscribe(mSubscription);
   }
 }

@@ -35,23 +35,12 @@ public class ApplicationModule {
     return mApplication;
   }
 
-  @Provides @Singleton PreferencesHelper providePrefsHelper() {
-    return new PreferencesHelper(mApplication);
-  }
-
   @Provides Gson provideGson() {
     return new Gson();
   }
 
-  @Provides @Singleton HttpClient provideHttpClient() {
-    return new HttpClient();
-  }
-
   @Provides @Singleton WebService provideWebService() {
-    return new WebService.Creator().create(provideHttpClient());
+    return WebService.Creator.create();
   }
 
-  @Provides @Singleton AccountDao provideAccountDao() {
-    return new AccountDao(mApplication);
-  }
 }

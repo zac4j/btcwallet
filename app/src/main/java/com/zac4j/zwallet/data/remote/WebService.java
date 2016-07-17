@@ -20,7 +20,7 @@ import rx.Single;
  * Created by zac on 16-7-3.
  */
 
-@Singleton public interface WebService {
+public interface WebService {
 
   String BASE_URL = "https://api.huobi.com/apiv3/";
 
@@ -39,14 +39,14 @@ import rx.Single;
 
   /**
    * 查询订单
+   *
    * @param methodName 1.get_new_deal_orders 个人最新10条成交 2.get_orders 正在进行的委托
    * @param coinType coin type 1 比特币 2 莱特币
    * @return 个人最新10条成交订单
    */
-  @FormUrlEncoded @POST(".") Single<List<DealOrder>> getOrders(
-      @Field("method") String methodName, @Field("access_key") String accessKey,
-      @Field("coin_type") int coinType, @Field("created") String created,
-      @Field("sign") String sign);
+  @FormUrlEncoded @POST(".") Single<List<DealOrder>> getOrders(@Field("method") String methodName,
+      @Field("access_key") String accessKey, @Field("coin_type") int coinType,
+      @Field("created") String created, @Field("sign") String sign);
 
   /**
    * 查询委托订单详情
@@ -72,7 +72,7 @@ import rx.Single;
       @Field("created") String created, @Field("sign") String sign);
 
   /**
-   *取消订单
+   * 取消订单
    *
    * @return success 表示成功取消订单
    */
@@ -81,9 +81,9 @@ import rx.Single;
       @Field("id") String orderId, @Field("created") String created, @Field("sign") String sign);
 
   class Creator {
-    @Inject public WebService create(HttpClient client) {
+    public static WebService create() {
       Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-          .client(client.create())
+          .client(new HttpClient().create())
           .addConverterFactory(GsonConverterFactory.create())
           .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
           .build();

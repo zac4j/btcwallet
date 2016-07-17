@@ -17,6 +17,7 @@ buildscript {
 allprojects {
   repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
   }
 }
 
@@ -40,10 +41,12 @@ ext {
 
   // Google
   daggerVersion = "2.5"
-  firebaseDBVersion = "9.2.0"
 
   rxandroidVersion = "1.2.1"
   // Facebook
   frescoVersion = '0.11.0'
   stethoVersion = "1.3.1"
+
+  // MPAndroidChart
+  chartVersion = "v3.0.0-beta1"
 }

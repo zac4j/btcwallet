@@ -11,6 +11,10 @@ import android.view.View;
 import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.di.ActivityContext;
+import com.zac4j.zwallet.di.ApplicationContext;
+import com.zac4j.zwallet.di.PerConfig;
+import com.zac4j.zwallet.util.RxUtils;
 import javax.inject.Inject;
 import rx.Subscription;
 
@@ -18,6 +22,7 @@ import rx.Subscription;
  * Send Funds(Coin/CNY etc.)
  * Created by Zac on 2016/7/5.
  */
+@PerConfig
 public class MyWalletViewModel implements ViewModel {
 
   public ObservableBoolean isSendFunds;
@@ -33,10 +38,11 @@ public class MyWalletViewModel implements ViewModel {
   private Context mContext;
   private Subscription mSubscription;
 
-  @Inject WebService mWebService;
+  private WebService mWebService;
 
-  @Inject public MyWalletViewModel(Context context) {
+  @Inject MyWalletViewModel(@ApplicationContext Context context, WebService webService) {
     mContext = context;
+    mWebService = webService;
 
     isSendFunds = new ObservableBoolean(true);
     progressVisibility = new ObservableInt(View.GONE);
@@ -49,8 +55,6 @@ public class MyWalletViewModel implements ViewModel {
     fundsLabel.set(mContext.getString(R.string.wallet_label_send));
     fundsBtnLabel = new ObservableField<>();
     fundsBtnLabel.set(mContext.getString(R.string.wallet_btn_label_send));
-
-    App.get(mContext).getApplicationComponent().inject(this);
   }
 
   public TextWatcher getRecipientWatcher() {
@@ -117,9 +121,7 @@ public class MyWalletViewModel implements ViewModel {
   }
 
   @Override public void destroy() {
-    if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-      mSubscription.unsubscribe();
-    }
+    RxUtils.unsubscribe(mSubscription);
   }
 
 }

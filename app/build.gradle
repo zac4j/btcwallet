@@ -48,6 +48,8 @@ dependencies {
   // Knife
   compile "com.jakewharton:butterknife:${knifeVersion}"
   apt "com.jakewharton:butterknife-compiler:${knifeVersion}"
+  // Chart
+  compile "com.github.PhilJay:MPAndroidChart:${chartVersion}"
   //compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha2'
   androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
   androidTestCompile 'com.android.support.test:runner:0.5'

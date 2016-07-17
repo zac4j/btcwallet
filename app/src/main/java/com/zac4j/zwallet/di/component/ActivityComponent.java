@@ -9,32 +9,19 @@ import com.zac4j.zwallet.view.MainActivity;
 import com.zac4j.zwallet.view.MyWalletActivity;
 import com.zac4j.zwallet.view.OrderDetailDialogFragment;
 import com.zac4j.zwallet.view.TransactionActivity;
-import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
-import com.zac4j.zwallet.viewmodel.MainViewModel;
-import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
-import com.zac4j.zwallet.viewmodel.OrderDetailViewModel;
-import com.zac4j.zwallet.viewmodel.TransactionViewModel;
-import dagger.Component;
+import dagger.Subcomponent;
 
 /**
  * Activity Component
  * Created by zac on 16-7-3.
  */
 
-@PerActivity @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
+@PerActivity @Subcomponent(modules = ActivityModule.class)
 public interface ActivityComponent {
-
+  @ActivityContext Context context();
   void inject(MainActivity activity);
   void inject(CoinTradeActivity activity);
   void inject(TransactionActivity activity);
   void inject(MyWalletActivity activity);
   void inject(OrderDetailDialogFragment fragment);
-
-  @ActivityContext Context context();
-
-  MainViewModel mainViewModel();
-  CoinTradeViewModel coinTradeViewModel();
-  TransactionViewModel transactionViewModel();
-  MyWalletViewModel myWalletViewModel();
-  OrderDetailViewModel orderDetailViewModel();
 }

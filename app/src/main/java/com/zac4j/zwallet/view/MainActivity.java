@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,14 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.adapter.OrderAdapter;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.databinding.ActivityMainBinding;
-import com.zac4j.zwallet.di.component.ActivityComponent;
-import com.zac4j.zwallet.di.component.DaggerActivityComponent;
-import com.zac4j.zwallet.di.module.ActivityModule;
 import com.zac4j.zwallet.model.local.Trade;
 import com.zac4j.zwallet.model.local.Transaction;
 import com.zac4j.zwallet.model.response.DealOrder;
@@ -41,14 +36,13 @@ public class MainActivity extends BaseActivity
   private ActivityMainBinding mBinding;
   private MenuItem mCoinSwitchItem;
 
-  @Inject PreferencesHelper mPrefsHelper;
   @Inject MainViewModel mViewModel;
+  @Inject PreferencesHelper mPrefsHelper;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
     getActivityComponent().inject(this);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
     mBinding.setViewModel(mViewModel);
     setupDrawer(mBinding);

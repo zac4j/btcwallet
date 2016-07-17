@@ -9,11 +9,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
-import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.di.ApplicationContext;
+import com.zac4j.zwallet.di.PerConfig;
 import com.zac4j.zwallet.model.local.Trade;
 import com.zac4j.zwallet.model.response.TradeResponse;
 import com.zac4j.zwallet.util.Constants;
@@ -31,11 +32,11 @@ import rx.functions.Func1;
  * Coin Trade view model
  * Created by zac on 16-7-9.
  */
+@PerConfig
 public class CoinTradeViewModel implements ViewModel {
   private static final String METHOD_NAME_BUY = "buy";
   private static final String METHOD_NAME_SELL = "sell";
 
-  private Context mContext;
   private Subscription mSubscription;
   private int mTradeType;
 
@@ -51,14 +52,15 @@ public class CoinTradeViewModel implements ViewModel {
   public ObservableField<String> totalPayment;
   public ObservableField<String> coinTradeBtnLabel;
 
-  @Inject WebService mWebService;
-  @Inject PreferencesHelper mPrefsHelper;
-  @Inject AccountDao mAccountDao;
+  private Context mContext;
+  private WebService mWebService;
+  private PreferencesHelper mPrefsHelper;
 
-  @Inject public CoinTradeViewModel(Context context) {
-    this.mContext = context;
-
-    App.get(context).getApplicationComponent().inject(this);
+  @Inject CoinTradeViewModel(@ApplicationContext Context context, WebService webService,
+      PreferencesHelper prefsHelper, AccountDao accountDao) {
+    mContext = context;
+    mWebService = webService;
+    mPrefsHelper = prefsHelper;
 
     progressVisibility = new ObservableInt(View.GONE);
     String defaultCoinTrade = mContext.getString(R.string.coin_trade_buy_label);
@@ -74,7 +76,7 @@ public class CoinTradeViewModel implements ViewModel {
     totalPayment = new ObservableField<>();
     coinTradeBtnLabel = new ObservableField<>();
 
-    mSubscription = mAccountDao.getCNYAsset().map(new Func1<String, String>() {
+    mSubscription = accountDao.getCNYAsset().map(new Func1<String, String>() {
       @Override public String call(String s) {
         return "￥" + s;
       }

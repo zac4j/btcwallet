@@ -58,4 +58,8 @@
   <!--traction-->
   <item name="transaction_order_list" type="id" />
 
+  <!--dashboard-->
+  <item name="dashboard_spinner" type="id" />
+  <item name="dashboard_kline_chart" type="id" />
+
 </resources>

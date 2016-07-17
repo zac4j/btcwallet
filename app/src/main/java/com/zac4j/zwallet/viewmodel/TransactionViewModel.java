@@ -5,10 +5,11 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.util.Pair;
 import android.view.View;
-import com.zac4j.zwallet.App;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.remote.WebService;
+import com.zac4j.zwallet.di.ApplicationContext;
+import com.zac4j.zwallet.di.PerConfig;
 import com.zac4j.zwallet.model.local.Transaction;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.util.Constants;
@@ -24,7 +25,7 @@ import rx.Subscription;
  * Transaction (pending/processed) View Model
  * Created by zac on 16-7-15.
  */
-
+@PerConfig
 public class TransactionViewModel implements ViewModel {
 
   private static final String GET_RECENT_ORDERS = "get_new_deal_orders";
@@ -34,8 +35,6 @@ public class TransactionViewModel implements ViewModel {
     void onDataChanged(List<DealOrder> orderList);
   }
 
-  private Context mContext;
-
   public ObservableInt progressVisibility;
   public ObservableInt ordersVisibility;
   public ObservableInt errorDisplayVisibility;
@@ -44,19 +43,19 @@ public class TransactionViewModel implements ViewModel {
   private OnDataChangedListener mListener;
   private Subscription mSubscription;
 
-  @Inject WebService mWebService;
-  @Inject PreferencesHelper mPrefsHelper;
+  private Context mContext;
+  private WebService mWebService;
+  private PreferencesHelper mPrefsHelper;
 
-  @Inject public TransactionViewModel(Context context) {
-
+  @Inject TransactionViewModel(@ApplicationContext Context context, WebService webService, PreferencesHelper prefsHelper) {
     mContext = context;
+    mWebService = webService;
+    mPrefsHelper = prefsHelper;
 
     progressVisibility = new ObservableInt(View.VISIBLE);
     ordersVisibility = new ObservableInt(View.GONE);
     errorDisplayVisibility = new ObservableInt(View.GONE);
     errorDisplay = new ObservableField<>();
-
-    App.get(mContext).getApplicationComponent().inject(this);
   }
 
   public void setOnDataChangedListener(OnDataChangedListener listener) {
@@ -105,8 +104,6 @@ public class TransactionViewModel implements ViewModel {
   }
 
   @Override public void destroy() {
-    if (mSubscription != null && !mSubscription.isUnsubscribed()) {
-      mSubscription.unsubscribe();
-    }
+    RxUtils.unsubscribe(mSubscription);
   }
 }

@@ -1,6 +1,10 @@
 package com.zac4j.zwallet.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.util.Pair;
+import android.view.inputmethod.InputMethodManager;
 import java.io.Closeable;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -73,4 +77,21 @@ public class Utils {
       }
     }
   }
+
+  public static float pxToDp(float px) {
+    float densityDpi = Resources.getSystem().getDisplayMetrics().densityDpi;
+    return px / (densityDpi / 160f);
+  }
+
+  public static int dpToPx(int dp) {
+    float density = Resources.getSystem().getDisplayMetrics().density;
+    return Math.round(dp * density);
+  }
+
+  public static void hideKeyboard(Activity activity) {
+    InputMethodManager imm =
+        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+  }
+
 }

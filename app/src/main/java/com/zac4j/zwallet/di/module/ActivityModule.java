@@ -1,12 +1,8 @@
 package com.zac4j.zwallet.di.module;
 
+import android.app.Activity;
 import android.content.Context;
 import com.zac4j.zwallet.di.ActivityContext;
-import com.zac4j.zwallet.viewmodel.CoinTradeViewModel;
-import com.zac4j.zwallet.viewmodel.MainViewModel;
-import com.zac4j.zwallet.viewmodel.MyWalletViewModel;
-import com.zac4j.zwallet.viewmodel.OrderDetailViewModel;
-import com.zac4j.zwallet.viewmodel.TransactionViewModel;
 import dagger.Module;
 import dagger.Provides;
 
@@ -15,40 +11,22 @@ import dagger.Provides;
  * Created by zac on 16-7-3.
  */
 
-@Module
-public class ActivityModule {
+@Module public class ActivityModule {
 
-  private Context mContext;
+  private Activity mActivity;
 
-  public ActivityModule(Context context){
-    mContext = context;
+  public ActivityModule(Activity activity) {
+    mActivity = activity;
+  }
+
+  @Provides Activity provideActivity() {
+    return mActivity;
   }
 
   @Provides @ActivityContext Context provideContext() {
-    if (mContext == null) {
+    if (mActivity == null) {
       throw new IllegalStateException("ActivityModule had not initialized!");
     }
-    return mContext;
+    return mActivity;
   }
-
-  @Provides MainViewModel provideMainViewModel() {
-    return new MainViewModel(mContext);
-  }
-
-  @Provides CoinTradeViewModel provideCoinTradeViewModel() {
-    return new CoinTradeViewModel(mContext);
-  }
-
-  @Provides TransactionViewModel provideTransactionViewModel() {
-    return new TransactionViewModel(mContext);
-  }
-
-  @Provides MyWalletViewModel provideMyWalletViewModel() {
-    return new MyWalletViewModel(mContext);
-  }
-
-  @Provides OrderDetailViewModel provideOrderDetailViewModel() {
-    return new OrderDetailViewModel(mContext);
-  }
-
 }
