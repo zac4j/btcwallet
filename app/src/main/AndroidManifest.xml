@@ -3,6 +3,7 @@
     package="com.zac4j.zwallet">
 
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
   <application
       android:name=".App"
@@ -44,6 +45,8 @@
         android:name=".view.TransactionActivity"
         android:screenOrientation="portrait"
         />
+
+    <service android:name=".service.PollService" />
   </application>
 
 </manifest>
