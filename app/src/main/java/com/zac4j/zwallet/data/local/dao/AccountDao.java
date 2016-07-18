@@ -55,6 +55,42 @@ import rx.Single;
   }
 
   /**
+   * Get account info
+   * @return account info
+   */
+  public Single<AccountInfo> getAccountInfo() {
+    return Single.defer(new Callable<Single<AccountInfo>>() {
+      @Override public Single<AccountInfo> call() throws Exception {
+        AccountInfo accountInfo = null;
+        String[] columns = {
+            DatabaseHelper.FIELD_TOTAL_ASSET, DatabaseHelper.FIELD_CNY_ASSET,
+            DatabaseHelper.FIELD_BTC_ASSET, DatabaseHelper.FIELD_LTC_ASSET
+        };
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+        try {
+          database = mDatabaseHelper.getReadableDatabase();
+          if (database != null) {
+            cursor =
+                database.query(DatabaseHelper.TABLE_ACCOUNT, columns, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+              String totalAsset = cursor.getString(0);
+              String cnyAsset = cursor.getString(1);
+              String btcAsset = cursor.getString(2);
+              String ltcAsset = cursor.getString(3);
+              accountInfo = new AccountInfo(totalAsset, cnyAsset, btcAsset, ltcAsset);
+            }
+          }
+          return Single.just(accountInfo);
+        } finally {
+          Utils.close(cursor);
+          Utils.close(database);
+        }
+      }
+    });
+  }
+
+  /**
    * Get account total asset info
    *
    * @return total asset

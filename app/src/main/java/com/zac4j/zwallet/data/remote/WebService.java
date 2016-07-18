@@ -3,6 +3,7 @@ package com.zac4j.zwallet.data.remote;
 import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.model.response.OrderInfo;
+import com.zac4j.zwallet.model.response.RealTimeEntity;
 import com.zac4j.zwallet.model.response.TradeResponse;
 import java.util.List;
 import javax.inject.Inject;
@@ -12,7 +13,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Single;
 
 /**
@@ -79,6 +82,23 @@ public interface WebService {
   @FormUrlEncoded @POST(".") Single<TradeResponse> cancelOrder(@Field("method") String methodName,
       @Field("access_key") String accessKey, @Field("coin_type") int coinType,
       @Field("id") String orderId, @Field("created") String created, @Field("sign") String sign);
+
+  /**
+   * 获取分时交易数据
+   * @param coinType 1.btc BitCoin 2.ltc LiteCoin
+   * @param interval 001~400 https://github.com/huobiapi/API_Docs_en/wiki/REST-Interval
+   * @return 所选间隔时间的交易数据
+   */
+  @GET("/staticmarket/{coin}_kline_{interval}_json.js") Single<List<List>>
+      getIntervalTimeData(@Path("coin") String coinType, @Path("interval") String interval);
+
+  /**
+   * 获取实时交易数据
+   * @param coinType 1.btc BitCoin 2.ltc LiteCoin
+   * @return 实时交易数据
+   */
+  @GET("/staticmarket/ticker_{coin}_json.js") Single<RealTimeEntity>
+  getRealTimeData(@Path("coin") String coinType);
 
   class Creator {
     public static WebService create() {

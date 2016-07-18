@@ -26,8 +26,8 @@
   <item name="drawer_main_layout" type="id"/>
   <item name="drawer_main_nav_view" type="id"/>
   <item name="drawer_main_header_sdv_avatar" type="id"/>
-  <item name="drawer_main_header_tv_nickname" type="id"/>
-  <item name="drawer_main_header_tv_account" type="id"/>
+  <item name="drawer_main_header_tv_account_asset" type="id"/>
+  <item name="drawer_main_header_tv_coin_amount" type="id"/>
 
   <!--main page-->
   <item name="main_fr_header_container" type="id"/>

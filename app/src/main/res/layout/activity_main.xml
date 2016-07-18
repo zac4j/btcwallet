@@ -44,40 +44,88 @@
               android:orientation="vertical"
               >
 
-            <TextView
-                android:id="@id/main_tv_total_asset"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="@dimen/space.medium"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                android:text="@{viewModel.totalAsset}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@color/white"
-                tools:text="$6.58"
-                />
+                android:orientation="horizontal"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/main_tv_total_asset"
-                android:layout_marginEnd="@dimen/space.medium"
-                android:layout_marginTop="@dimen/space.medium"
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{viewModel.coinPrice}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/white"
+                    tools:text="￥46.66"
+                    />
 
-                android:text="@{viewModel.coinAsset}"
-                android:textColor="@color/white"
-                tools:text="25,100"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Coin price"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space.small"
-                android:onClick="@{viewModel::onRefresh}"
-                android:layout_alignParentBottom="true"
-                android:text="refresh"
-                />
+              </LinearLayout>
+
+              <View style="@style/Divider.Vertical"/>
+
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{viewModel.priceVariation}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/white"
+                    tools:text="￥4.66"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Since open"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    />
+
+              </LinearLayout>
+
+              <RelativeLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sort_up"
+                    app:visibility="@{viewModel.sortUpVisibility}"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sort_down"
+                    app:visibility="@{viewModel.sortDownVisibility}"
+                    />
+
+              </RelativeLayout>
+
+            </LinearLayout>
 
           </RelativeLayout>
 

@@ -14,6 +14,7 @@ import com.zac4j.zwallet.di.ApplicationContext;
 import com.zac4j.zwallet.di.PerConfig;
 import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
+import com.zac4j.zwallet.model.response.RealTimeEntity;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.util.Utils;
@@ -39,13 +40,14 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
   public ObservableInt progressVisibility;
   public ObservableInt ordersVisibility;
-  public ObservableField<String> totalAsset;
-  public ObservableField<String> coinAsset;
+  public ObservableInt sortUpVisibility;
+  public ObservableInt sortDownVisibility;
+  public ObservableField<String> coinPrice;
+  public ObservableField<String> priceVariation;
 
   private Context mContext;
   private Subscription mSubscription;
-  private int coinType;
-  private String requestTime;
+  private String mRealTime;
 
   private WebService mWebService;
   private AccountDao mAccountDao;
@@ -60,29 +62,66 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
     mDataChangedListener = listener;
   }
 
-  @Inject MainViewModel(@ApplicationContext Context context, PreferencesHelper prefsHelper, WebService webService, AccountDao dao) {
+  @Inject MainViewModel(@ApplicationContext Context context, PreferencesHelper prefsHelper,
+      WebService webService, AccountDao dao) {
     mContext = context;
     mWebService = webService;
     mAccountDao = dao;
 
     progressVisibility = new ObservableInt(View.INVISIBLE);
     ordersVisibility = new ObservableInt(View.INVISIBLE);
+    sortUpVisibility = new ObservableInt(View.INVISIBLE);
+    sortDownVisibility = new ObservableInt(View.INVISIBLE);
 
-    coinAsset = new ObservableField<>();
-    totalAsset = new ObservableField<>();
+    coinPrice = new ObservableField<>();
+    priceVariation = new ObservableField<>();
 
-    coinType =
+    int coinType =
         prefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
-
-    // Get data while showing
-    requestTime = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    getAccountInfo(requestTime);
-    getRecentOrders(requestTime);
+    updateAccountInfo(coinType);
   }
 
-  public void onRefresh(View view) {
+  private void updateAccountInfo(int coinType) {
+    // Get data while showing
+    String requestTime = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     getAccountInfo(requestTime);
-    getRecentOrders(requestTime);
+    getRecentOrders(requestTime, coinType);
+    getRealTimeData(coinType);
+  }
+
+  private void getRealTimeData(int coinType) {
+    String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
+    final NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
+    mSubscription = mWebService.getRealTimeData(type)
+        .compose(RxUtils.<RealTimeEntity>applySchedulers())
+        .subscribe(new Subscriber<RealTimeEntity>() {
+          @Override public void onCompleted() {
+          }
+
+          @Override public void onError(Throwable e) {
+            coinPrice.set(formatter.format(0.00d));
+            priceVariation.set(formatter.format(0.00d));
+          }
+
+          @Override public void onNext(RealTimeEntity realTimeEntity) {
+            mRealTime = realTimeEntity.getTime();
+            double lastPrice = realTimeEntity.getTicker().getLast();
+            double openPrice = realTimeEntity.getTicker().getOpen();
+            double variation = lastPrice - openPrice;
+            if (variation > 0) {
+              sortUpVisibility.set(View.VISIBLE);
+              sortDownVisibility.set(View.INVISIBLE);
+            } else if (variation == 0) {
+              sortUpVisibility.set(View.INVISIBLE);
+              sortDownVisibility.set(View.INVISIBLE);
+            } else {
+              sortUpVisibility.set(View.INVISIBLE);
+              sortDownVisibility.set(View.INVISIBLE);
+            }
+            coinPrice.set(formatter.format(lastPrice));
+            priceVariation.set(formatter.format(variation));
+          }
+        });
   }
 
   private void getAccountInfo(String time) {
@@ -111,18 +150,6 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
           @Override public void onNext(AccountInfo accountInfo) {
             if (accountInfo != null) {
-              NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
-              String totalAssets = formatter.format(Double.parseDouble(accountInfo.getTotal()));
-              totalAsset.set(totalAssets);
-
-              String coinAssets;
-              if (coinType == Constants.COIN_TYPE_BTC) {
-                coinAssets = mContext.getString(R.string.unit_btc, accountInfo.getAvailableBTC());
-              } else {
-                coinAssets = mContext.getString(R.string.unit_ltc, accountInfo.getAvailableLTC());
-              }
-              coinAsset.set(coinAssets);
-
               mAccountDao.clearAll();
               mAccountDao.setAccountInfo(accountInfo);
             }
@@ -130,7 +157,7 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
         });
   }
 
-  private void getRecentOrders(String time) {
+  private void getRecentOrders(String time, int coinType) {
     List<Pair<String, String>> parameterPairs = new ArrayList<>();
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, GET_RECENT_ORDERS);
     Pair<String, String> createdTimePair = new Pair<>(Constants.CREATED_TIME, time);

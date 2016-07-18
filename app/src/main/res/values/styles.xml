@@ -16,4 +16,12 @@
     <item name="android:layout_marginBottom">@dimen/space.small</item>
   </style>
 
+  <style name="Divider.Vertical">
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">@dimen/space.divider</item>
+    <item name="android:background">@color/gray_light</item>
+    <item name="android:layout_marginLeft">@dimen/space.small</item>
+    <item name="android:layout_marginRight">@dimen/space.small</item>
+  </style>
+
 </resources>

@@ -5,6 +5,7 @@ import com.zac4j.zwallet.di.ActivityContext;
 import com.zac4j.zwallet.di.PerActivity;
 import com.zac4j.zwallet.di.module.ActivityModule;
 import com.zac4j.zwallet.view.CoinTradeActivity;
+import com.zac4j.zwallet.view.DashboardActivity;
 import com.zac4j.zwallet.view.MainActivity;
 import com.zac4j.zwallet.view.MyWalletActivity;
 import com.zac4j.zwallet.view.OrderDetailDialogFragment;
@@ -20,6 +21,7 @@ import dagger.Subcomponent;
 public interface ActivityComponent {
   @ActivityContext Context context();
   void inject(MainActivity activity);
+  void inject(DashboardActivity activity);
   void inject(CoinTradeActivity activity);
   void inject(TransactionActivity activity);
   void inject(MyWalletActivity activity);

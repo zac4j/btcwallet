@@ -29,6 +29,12 @@
         />
 
     <activity
+        android:name=".view.DashboardActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
+        />
+
+    <activity
         android:name=".view.CoinTradeActivity"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustResize"

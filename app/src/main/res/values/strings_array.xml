@@ -35,14 +35,10 @@
     <item>@color/blue_gray</item>
   </string-array>
   <string-array name="kline_period">
-    <item>1min</item>
-    <item>5min</item>
-    <item>15min</item>
-    <item>30min</item>
-    <item>60min</item>
-    <item>day</item>
-    <item>week</item>
-    <item>month</item>
-    <item>year</item>
+    <item>Hour</item>
+    <item>Day</item>
+    <item>Week</item>
+    <item>Month</item>
+    <item>Year</item>
   </string-array>
 </resources>

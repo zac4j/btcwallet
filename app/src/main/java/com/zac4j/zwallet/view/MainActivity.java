@@ -11,21 +11,31 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.TextureView;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import com.zac4j.zwallet.R;
 import com.zac4j.zwallet.adapter.OrderAdapter;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
+import com.zac4j.zwallet.data.local.dao.AccountDao;
 import com.zac4j.zwallet.databinding.ActivityMainBinding;
 import com.zac4j.zwallet.model.local.Trade;
 import com.zac4j.zwallet.model.local.Transaction;
+import com.zac4j.zwallet.model.response.AccountInfo;
 import com.zac4j.zwallet.model.response.DealOrder;
 import com.zac4j.zwallet.util.Constants;
+import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.view.widget.DividerItemDecoration;
 import com.zac4j.zwallet.viewmodel.MainViewModel;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener,
@@ -35,9 +45,11 @@ public class MainActivity extends BaseActivity
   private NavigationView mNavigationView;
   private ActivityMainBinding mBinding;
   private MenuItem mCoinSwitchItem;
+  private int mCoinType = Constants.COIN_TYPE_LTC;
 
   @Inject MainViewModel mViewModel;
   @Inject PreferencesHelper mPrefsHelper;
+  @Inject AccountDao mAccountDao;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -85,17 +97,17 @@ public class MainActivity extends BaseActivity
     coinSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         int titleRes;
-        int coinType;
         if (b) {
           titleRes = R.string.menu_coin_btc;
-          coinType = Constants.COIN_TYPE_BTC;
+          mCoinType = Constants.COIN_TYPE_BTC;
         } else {
           titleRes = R.string.menu_coin_ltc;
-          coinType = Constants.COIN_TYPE_LTC;
+          mCoinType = Constants.COIN_TYPE_LTC;
         }
 
         mCoinSwitchItem.setTitle(titleRes);
-        mPrefsHelper.getPrefs().edit().putInt(Constants.CURRENT_SELECT_COIN, coinType).apply();
+        mPrefsHelper.getPrefs().edit().putInt(Constants.CURRENT_SELECT_COIN, mCoinType).apply();
+        updateAccountInfo();
       }
     });
   }
@@ -104,6 +116,7 @@ public class MainActivity extends BaseActivity
     switch (item.getItemId()) {
       case android.R.id.home:
         mDrawerLayout.openDrawer(GravityCompat.START);
+        updateAccountInfo();
         return true;
     }
     return super.onOptionsItemSelected(item);
@@ -112,6 +125,9 @@ public class MainActivity extends BaseActivity
   @Override public boolean onNavigationItemSelected(MenuItem item) {
 
     switch (item.getItemId()) {
+      case R.id.action_dashboard:
+        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+        break;
       case R.id.action_trade_buy:
         startActivity(new Intent(MainActivity.this, CoinTradeActivity.class).putExtra(
             CoinTradeActivity.EXTRA_TRADE, Trade.BUY));
@@ -142,5 +158,42 @@ public class MainActivity extends BaseActivity
     OrderAdapter adapter = (OrderAdapter) mBinding.mainRvOrderList.getAdapter();
     adapter.addAll(dealOrderList);
     adapter.notifyDataSetChanged();
+  }
+
+  private void updateAccountInfo() {
+    View drawer = mBinding.drawerMainNavView;
+    final TextView assetView =
+        (TextView) drawer.findViewById(R.id.drawer_main_header_tv_account_asset);
+    final TextView coinAmountView =
+        (TextView) drawer.findViewById(R.id.drawer_main_header_tv_coin_amount);
+    mAccountDao.getAccountInfo()
+        .compose(RxUtils.<AccountInfo>applySchedulers())
+        .subscribe(new Action1<AccountInfo>() {
+          @Override public void call(AccountInfo accountInfo) {
+            if (accountInfo != null) {
+              if (!TextUtils.isEmpty(accountInfo.getTotal())) {
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
+                String totalAsset = formatter.format(Double.parseDouble(accountInfo.getTotal()));
+                if (!TextUtils.isEmpty(totalAsset) && assetView != null) {
+                  assetView.setText(totalAsset);
+                }
+              }
+
+              if (coinAmountView != null) {
+                String ltcAsset = accountInfo.getAvailableLTC();
+                String btcAsset = accountInfo.getAvailableBTC();
+                String coinAsset;
+                if (mCoinType == Constants.COIN_TYPE_LTC) {
+                  coinAsset =
+                      getString(R.string.unit_ltc, TextUtils.isEmpty(ltcAsset) ? "0.00" : ltcAsset);
+                } else {
+                  coinAsset =
+                      getString(R.string.unit_btc, TextUtils.isEmpty(btcAsset) ? "0.00" : btcAsset);
+                }
+                coinAmountView.setText(coinAsset);
+              }
+            }
+          }
+        });
   }
 }

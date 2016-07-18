@@ -40,6 +40,10 @@ public class ItemOrderViewModel extends BaseObservable implements ViewModel {
   }
 
   public String getProcessName() {
+    boolean isPendingOrder = verifyIsPendingOrder(mDealOrder);
+    if (isPendingOrder) {
+      return "Pending";
+    }
     if ("1".equals(mDealOrder.getType())) {
       return "Received";
     } else {
@@ -58,8 +62,10 @@ public class ItemOrderViewModel extends BaseObservable implements ViewModel {
   }
 
   public String getAmount() {
+    boolean isPendingOrder = verifyIsPendingOrder(mDealOrder);
     String priceTxt = mDealOrder.getOrderPrice();
-    String amountTxt = mDealOrder.getProcessedAmount();
+    String amountTxt =
+        isPendingOrder ? mDealOrder.getOrderAmount() : mDealOrder.getProcessedAmount();
     double price = 0.0;
     if (!TextUtils.isEmpty(priceTxt)) {
       price = Double.parseDouble(priceTxt);
@@ -81,7 +87,9 @@ public class ItemOrderViewModel extends BaseObservable implements ViewModel {
   }
 
   public String getProcessedTime() {
-    String timeMillisTxt = mDealOrder.getLastProcessedTime();
+    boolean isPendingOrder = verifyIsPendingOrder(mDealOrder);
+    String timeMillisTxt =
+        isPendingOrder ? mDealOrder.getOrderTime() : mDealOrder.getLastProcessedTime();
     if (!TextUtils.isEmpty(timeMillisTxt)) {
       long time = Long.parseLong(timeMillisTxt);
       long deltaTime = System.currentTimeMillis() / 1000 - time;
@@ -91,11 +99,17 @@ public class ItemOrderViewModel extends BaseObservable implements ViewModel {
   }
 
   public void onItemClick(View view) {
+    boolean isPendingOrder = verifyIsPendingOrder(mDealOrder);
     OrderDetailDialogFragment dialogFragment =
         OrderDetailDialogFragment.newInstance(mDealOrder.getId(),
-            mDealOrder.getLastProcessedTime());
+            isPendingOrder ? mDealOrder.getOrderTime() : mDealOrder.getLastProcessedTime());
     FragmentManager fragmentMgr = ((AppCompatActivity) mContext).getSupportFragmentManager();
     dialogFragment.show(fragmentMgr);
+  }
+
+  private boolean verifyIsPendingOrder(DealOrder order) {
+    String processedTime = order.getLastProcessedTime();
+    return TextUtils.isEmpty(processedTime);
   }
 
   @Override public void destroy() {

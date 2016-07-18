@@ -9,26 +9,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class AccountInfo {
   private String total;
-  @SerializedName("net_asset")
-  private String netAssets;
-  @SerializedName("available_cny_display")
-  private String availableCNY;
-  @SerializedName("available_btc_display")
-  private String availableBTC;
-  @SerializedName("available_ltc_display")
-  private String availableLTC;
-  @SerializedName("frozen_cny_display")
-  private String frozenCNY;
-  @SerializedName("frozen_btc_display")
-  private String frozenBTC;
-  @SerializedName("frozen_ltc_display")
-  private String frozenLTC;
-  @SerializedName("loan_cny_display")
-  private String loanCNY;
-  @SerializedName("loan_btc_display")
-  private String loanBTC;
-  @SerializedName("loan_ltc_display")
-  private String loanLTC;
+  @SerializedName("net_asset") private String netAssets;
+  @SerializedName("available_cny_display") private String availableCNY;
+  @SerializedName("available_btc_display") private String availableBTC;
+  @SerializedName("available_ltc_display") private String availableLTC;
+  @SerializedName("frozen_cny_display") private String frozenCNY;
+  @SerializedName("frozen_btc_display") private String frozenBTC;
+  @SerializedName("frozen_ltc_display") private String frozenLTC;
+  @SerializedName("loan_cny_display") private String loanCNY;
+  @SerializedName("loan_btc_display") private String loanBTC;
+  @SerializedName("loan_ltc_display") private String loanLTC;
+
+  public AccountInfo() {
+  }
+
+  public AccountInfo(String total, String availableCNY, String availableBTC,
+      String availableLTC) {
+    this.total = total;
+    this.availableCNY = availableCNY;
+    this.availableBTC = availableBTC;
+    this.availableLTC = availableLTC;
+  }
 
   public String getTotal() {
     return total;

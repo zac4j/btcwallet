@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,22 +18,25 @@
       />
 
   <TextView
-      android:id="@id/drawer_main_header_tv_nickname"
+      android:id="@id/drawer_main_header_tv_account_asset"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/space.small"
-      android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      android:layout_centerHorizontal="true"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
-      tools:text="Arron"
+      tools:text="￥2009.98"
       />
 
   <TextView
-      android:id="@id/drawer_main_header_tv_account"
+      android:id="@id/drawer_main_header_tv_coin_amount"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_below="@id/drawer_main_header_tv_account_asset"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="@dimen/space.small"
       android:textAppearance="@style/TextAppearance.AppCompat.Body1"
       android:textColor="@color/white"
-      tools:text="arron@gmail.com"
+      tools:text="1600 lits"
       />
 
-</LinearLayout>
+</RelativeLayout>
