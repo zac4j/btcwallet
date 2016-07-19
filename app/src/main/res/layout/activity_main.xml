@@ -47,7 +47,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                android:layout_centerHorizontal="true"
                 android:orientation="horizontal"
                 >
 
@@ -113,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_sort_up"
+                    android:visibility="invisible"
                     app:visibility="@{viewModel.sortUpVisibility}"
                     />
 
@@ -120,6 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_sort_down"
+                    android:visibility="invisible"
                     app:visibility="@{viewModel.sortDownVisibility}"
                     />
 

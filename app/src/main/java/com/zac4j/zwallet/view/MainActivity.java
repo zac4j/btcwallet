@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;

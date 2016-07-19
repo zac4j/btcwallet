@@ -14,6 +14,7 @@ import com.zac4j.zwallet.model.response.OrderInfo;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import com.zac4j.zwallet.util.Utils;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -98,13 +99,23 @@ import rx.Subscription;
 
           @Override public void onNext(OrderInfo orderInfo) {
             orderStatus.set(mOrderStatus[orderInfo.getStatus()]);
-            String payment = mContext.getString(R.string.unit_price, orderInfo.getTotal());
+            String payment;
+            int orderStatus = orderInfo.getStatus();
+            if (orderStatus == 2) {
+              payment = mContext.getString(R.string.unit_price, orderInfo.getTotal());
+            } else {
+              payment = new BigDecimal(orderInfo.getOrderPrice()).multiply(
+                  new BigDecimal(orderInfo.getOrderAmount()))
+                  .setScale(2, BigDecimal.ROUND_UP)
+                  .toString();
+            }
             totalPayment.set(payment);
 
             String amount = mContext.getString(
                 coinType == Constants.COIN_TYPE_LTC ? R.string.unit_ltc : R.string.unit_btc,
-                orderInfo.getProcessedAmount());
-            String price = mContext.getString(R.string.unit_price, orderInfo.getProcessedPrice());
+                orderStatus == 2 ? orderInfo.getProcessedAmount() : orderInfo.getOrderAmount());
+            String price = mContext.getString(R.string.unit_price,
+                orderStatus == 2 ? orderInfo.getProcessedPrice() : orderInfo.getOrderPrice());
             String pm = mContext.getString(R.string.order_detail_price_amount, amount, price);
             priceAmount.set(pm);
 

@@ -115,11 +115,11 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
               sortUpVisibility.set(View.INVISIBLE);
               sortDownVisibility.set(View.INVISIBLE);
             } else {
+              sortDownVisibility.set(View.VISIBLE);
               sortUpVisibility.set(View.INVISIBLE);
-              sortDownVisibility.set(View.INVISIBLE);
             }
             coinPrice.set(formatter.format(lastPrice));
-            priceVariation.set(formatter.format(variation));
+            priceVariation.set(formatter.format(Math.abs(variation)));
           }
         });
   }

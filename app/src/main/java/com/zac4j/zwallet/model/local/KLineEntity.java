@@ -6,12 +6,26 @@ package com.zac4j.zwallet.model.local;
  */
 
 public class KLineEntity {
+
   private String date;
-  private String openingPrice;
-  private String highestPrice;
-  private String lowestPrice;
-  private String closingPrice;
-  private String tradingVolume;
+  private String openingPrice; // 开盘价
+  private String highestPrice; // 最高价
+  private String lowestPrice; // 最低价
+  private String closingPrice; // 收盘价
+  private String tradingVolume; // 交易量
+
+  public KLineEntity() {
+  }
+
+  public KLineEntity(String date, String openingPrice, String highestPrice, String lowestPrice,
+      String closingPrice, String tradingVolume) {
+    this.date = date;
+    this.openingPrice = openingPrice;
+    this.highestPrice = highestPrice;
+    this.lowestPrice = lowestPrice;
+    this.closingPrice = closingPrice;
+    this.tradingVolume = tradingVolume;
+  }
 
   public String getDate() {
     return date;
@@ -59,5 +73,16 @@ public class KLineEntity {
 
   public void setTradingVolume(String tradingVolume) {
     this.tradingVolume = tradingVolume;
+  }
+
+  @Override public String toString() {
+    return "KLineEntity{" +
+        "date='" + date + '\'' +
+        ", openingPrice='" + openingPrice + '\'' +
+        ", highestPrice='" + highestPrice + '\'' +
+        ", lowestPrice='" + lowestPrice + '\'' +
+        ", closingPrice='" + closingPrice + '\'' +
+        ", tradingVolume='" + tradingVolume + '\'' +
+        '}';
   }
 }

@@ -6,8 +6,6 @@ import com.zac4j.zwallet.model.response.OrderInfo;
 import com.zac4j.zwallet.model.response.RealTimeEntity;
 import com.zac4j.zwallet.model.response.TradeResponse;
 import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

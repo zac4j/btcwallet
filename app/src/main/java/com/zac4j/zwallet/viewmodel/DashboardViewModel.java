@@ -1,16 +1,22 @@
 package com.zac4j.zwallet.viewmodel;
 
+import android.databinding.ObservableInt;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import com.zac4j.zwallet.data.local.PreferencesHelper;
 import com.zac4j.zwallet.data.remote.WebService;
 import com.zac4j.zwallet.di.PerConfig;
+import com.zac4j.zwallet.model.local.KLineEntity;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
 import java.util.List;
 import javax.inject.Inject;
+import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action1;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Dashboard view model
@@ -18,32 +24,47 @@ import rx.functions.Action1;
  */
 
 @PerConfig public class DashboardViewModel implements ViewModel {
+
+  private static final String TAG = "DashboardViewModel";
+
+  public interface OnDataChangedListener {
+    void onDataChanged(List<KLineEntity> entityList);
+  }
+
+  public ObservableInt progressVisibility;
+
   private String[] intervalTimes = { "060", "100", "200", "300", "400" };
 
   private WebService mWebService;
-  private PreferencesHelper mPrefsHelper;
-
   private Subscription mSubscription;
 
-  @Inject DashboardViewModel(WebService webService, PreferencesHelper prefsHelper) {
-    mWebService = webService;
-    mPrefsHelper = prefsHelper;
+  private String mIntervalTime;
+  private int mCoinType;
 
-    getIntervalTimeData(Constants.COIN_TYPE_BTC, "400");
+  private OnDataChangedListener mListener;
+
+  public void setOnDataChangedListener(OnDataChangedListener listener) {
+    mListener = listener;
+  }
+
+  @Inject DashboardViewModel(WebService webService, PreferencesHelper prefsHelper) {
+
+    progressVisibility = new ObservableInt(View.GONE);
+
+    mWebService = webService;
+
+    mIntervalTime = intervalTimes[0]; // default interval time
+
+    mCoinType = prefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
+    getIntervalTimeData(mCoinType, mIntervalTime);
   }
 
   public AdapterView.OnItemSelectedListener getOnItemSelectedListener() {
     return new AdapterView.OnItemSelectedListener() {
       @Override public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (i) {
-          case 0:
-            break;
-          case 1:
-            break;
-          case 2:
-            break;
-          case 3:
-            break;
+        if (i < intervalTimes.length) {
+          mIntervalTime = intervalTimes[i];
+          getIntervalTimeData(mCoinType, mIntervalTime);
         }
       }
 
@@ -60,29 +81,46 @@ import rx.functions.Action1;
    * @param intervalTime 分时间隔时间
    */
   private void getIntervalTimeData(int coinType, String intervalTime) {
+    progressVisibility.set(View.VISIBLE);
     String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
     mSubscription = mWebService.getIntervalTimeData(type, intervalTime)
-        .compose(RxUtils.<List<List>>applySchedulers())
-        .subscribe(new Action1<List<List>>() {
-          @Override public void call(List<List> s) {
-
-            System.out.println("fuck you!" + s.get(0).get(0).toString());
+        .toObservable()
+        .flatMapIterable(new Func1<List<List>, Iterable<List>>() {
+          @Override public Iterable<List> call(List<List> lists) {
+            return lists;
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            System.out.println("fuck you!" + throwable.getMessage());
+        })
+        .map(new Func1<List, KLineEntity>() {
+          @Override public KLineEntity call(List list) {
+            String time = list.get(0).toString();
+            String openPrice = list.get(1).toString();
+            String highestPrice = list.get(2).toString();
+            String lowestPrice = list.get(3).toString();
+            String closingPrice = list.get(4).toString();
+            String tradingVolume = list.get(5).toString();
+            return new KLineEntity(time, openPrice, highestPrice, lowestPrice, closingPrice,
+                tradingVolume);
+          }
+        })
+        .toList()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Subscriber<List<KLineEntity>>() {
+          @Override public void onCompleted() {
+            progressVisibility.set(View.GONE);
+          }
+
+          @Override public void onError(Throwable e) {
+            progressVisibility.set(View.GONE);
+            Log.e(TAG, "onError: " + e.getMessage());
+          }
+
+          @Override public void onNext(List<KLineEntity> entityList) {
+            if (entityList != null && !entityList.isEmpty()) {
+              mListener.onDataChanged(entityList);
+            }
           }
         });
-  }
-
-  /**
-   * 获取实时交易数据
-   *
-   * @param coinType 币种 1.btc BitCoin 2.ltc LiteCoin
-   */
-  private void getRealTimeData(int coinType) {
-    String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
-
   }
 
   @Override public void destroy() {

@@ -42,6 +42,7 @@ dependencies {
   compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
   // Rx
   compile "io.reactivex:rxandroid:${rxandroidVersion}"
+  compile "io.reactivex:rxjava:${rxjavaVersion}"
   // Dagger2
   compile "com.google.dagger:dagger:${daggerVersion}"
   provided "com.google.dagger:dagger-compiler:${daggerVersion}"

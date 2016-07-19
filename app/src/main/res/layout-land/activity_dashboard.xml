@@ -6,13 +6,13 @@
   <data>
     <variable
         name="viewModel"
-        type="com.zac4j.zwallet.viewmodel.DashboardViewModel" />
+        type="com.zac4j.zwallet.viewmodel.DashboardViewModel"
+        />
   </data>
 
-  <LinearLayout
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
       >
 
     <android.support.design.widget.AppBarLayout
@@ -36,18 +36,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            spinnerItemSelectedListener="@{viewModel.onItemSelectedListener}"
             android:entries="@array/kline_period"
+            spinnerItemSelectedListener="@{viewModel.onItemSelectedListener}"
             />
 
       </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:visibility="@{viewModel.progressVisibility}"
+        style="@style/Widget.AppCompat.ProgressBar"
+        />
+
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@id/dashboard_kline_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
         />
 
-  </LinearLayout>
+  </RelativeLayout>
 </layout>
