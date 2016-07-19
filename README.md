@@ -10,7 +10,7 @@ Dependencies:
 + Android DataBinding
 + Dagger 2
 + Retrofit 2
-+ RxJava
++ RxAndroid/RxJava
 + Gson
 + [MPAndroidChart][chart]
 + Fresco
