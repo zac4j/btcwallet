@@ -25,8 +25,7 @@ import rx.Subscription;
  * Transaction (pending/processed) View Model
  * Created by zac on 16-7-15.
  */
-@PerConfig
-public class TransactionViewModel implements ViewModel {
+@PerConfig public class TransactionViewModel implements ViewModel {
 
   private static final String GET_RECENT_ORDERS = "get_new_deal_orders";
   private static final String GET_PENDING_ORDERS = "get_orders";
@@ -47,7 +46,8 @@ public class TransactionViewModel implements ViewModel {
   private WebService mWebService;
   private PreferencesHelper mPrefsHelper;
 
-  @Inject TransactionViewModel(@ApplicationContext Context context, WebService webService, PreferencesHelper prefsHelper) {
+  @Inject TransactionViewModel(@ApplicationContext Context context, WebService webService,
+      PreferencesHelper prefsHelper) {
     mContext = context;
     mWebService = webService;
     mPrefsHelper = prefsHelper;
@@ -66,7 +66,8 @@ public class TransactionViewModel implements ViewModel {
     String methodName =
         transactionType == Transaction.PENDING ? GET_PENDING_ORDERS : GET_RECENT_ORDERS;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    int coinType = mPrefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
+    int coinType =
+        mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
 
     List<Pair<String, String>> parameterPairs = new ArrayList<>();
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, methodName);

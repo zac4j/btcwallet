@@ -47,8 +47,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?android:attr/actionBarSize"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="?android:attr/actionBarSize"
                 android:orientation="horizontal"
                 >
 
@@ -144,6 +144,17 @@
               />
         </android.support.design.widget.CollapsingToolbarLayout>
       </android.support.design.widget.AppBarLayout>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:padding="@dimen/space.medium"
+          android:text="@{viewModel.errorDisplay}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+          app:visibility="@{viewModel.errorDisplayVisibility}"
+          tools:text="Empty List"
+          />
 
       <ProgressBar
           android:id="@id/progress_bar"

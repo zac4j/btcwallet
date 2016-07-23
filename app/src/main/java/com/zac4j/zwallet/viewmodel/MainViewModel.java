@@ -42,8 +42,10 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
   public ObservableInt ordersVisibility;
   public ObservableInt sortUpVisibility;
   public ObservableInt sortDownVisibility;
+  public ObservableInt errorDisplayVisibility;
   public ObservableField<String> coinPrice;
   public ObservableField<String> priceVariation;
+  public ObservableField<String> errorDisplay;
 
   private Context mContext;
   private Subscription mSubscription;
@@ -51,6 +53,7 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
   private WebService mWebService;
   private AccountDao mAccountDao;
+  private PreferencesHelper mPrefsHelper;
 
   public interface OnDataChangedListener {
     void onGetRecentOrders(List<DealOrder> dealOrderList);
@@ -67,22 +70,25 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
     mContext = context;
     mWebService = webService;
     mAccountDao = dao;
+    mPrefsHelper = prefsHelper;
 
     progressVisibility = new ObservableInt(View.INVISIBLE);
     ordersVisibility = new ObservableInt(View.INVISIBLE);
     sortUpVisibility = new ObservableInt(View.INVISIBLE);
     sortDownVisibility = new ObservableInt(View.INVISIBLE);
+    errorDisplayVisibility = new ObservableInt(View.INVISIBLE);
 
     coinPrice = new ObservableField<>();
     priceVariation = new ObservableField<>();
+    errorDisplay = new ObservableField<>();
 
-    int coinType =
-        prefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
-    updateAccountInfo(coinType);
+    updateAccountInfo();
   }
 
-  private void updateAccountInfo(int coinType) {
+  private void updateAccountInfo() {
     // Get data while showing
+    int coinType =
+        mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
     String requestTime = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     getAccountInfo(requestTime);
     getRecentOrders(requestTime, coinType);
@@ -183,6 +189,9 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
             if (dealOrders != null && !dealOrders.isEmpty()) {
               mDataChangedListener.onGetRecentOrders(dealOrders);
               ordersVisibility.set(View.VISIBLE);
+            } else {
+              errorDisplay.set(mContext.getString(R.string.empty_data));
+              errorDisplayVisibility.set(View.VISIBLE);
             }
           }
         });

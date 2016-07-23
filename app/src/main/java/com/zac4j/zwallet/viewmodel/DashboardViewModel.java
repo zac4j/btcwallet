@@ -1,6 +1,7 @@
 package com.zac4j.zwallet.viewmodel;
 
 import android.databinding.ObservableInt;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +11,10 @@ import com.zac4j.zwallet.di.PerConfig;
 import com.zac4j.zwallet.model.local.KLineEntity;
 import com.zac4j.zwallet.util.Constants;
 import com.zac4j.zwallet.util.RxUtils;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.Subscription;
@@ -55,8 +59,8 @@ import rx.schedulers.Schedulers;
 
     mIntervalTime = intervalTimes[0]; // default interval time
 
-    mCoinType = prefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
-    getIntervalTimeData(mCoinType, mIntervalTime);
+    mCoinType =
+        prefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
   }
 
   public AdapterView.OnItemSelectedListener getOnItemSelectedListener() {
@@ -98,7 +102,15 @@ import rx.schedulers.Schedulers;
             String lowestPrice = list.get(3).toString();
             String closingPrice = list.get(4).toString();
             String tradingVolume = list.get(5).toString();
-            return new KLineEntity(time, openPrice, highestPrice, lowestPrice, closingPrice,
+
+            String date = time.substring(0, 8);
+            if (mIntervalTime.equals(intervalTimes[0])) {
+              time = time.substring(8,10) + ":" + time.substring(10,12);
+            } else {
+              time = time.substring(4,6) + "-" + time.substring(6,8);
+            }
+
+            return new KLineEntity(date, time, openPrice, highestPrice, lowestPrice, closingPrice,
                 tradingVolume);
           }
         })

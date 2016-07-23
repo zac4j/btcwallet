@@ -83,12 +83,14 @@ public class DashboardActivity extends BaseActivity
     mChart.resetTracking();
     List<CandleEntry> yVals = new ArrayList<>();
     for (int i = 0; i < entityList.size(); i++) {
+      String time = entityList.get(i).getTime();
       String highestPrice = entityList.get(i).getHighestPrice();
       String lowestPrice = entityList.get(i).getLowestPrice();
       String openingPrice = entityList.get(i).getOpeningPrice();
       String closingPrice = entityList.get(i).getClosingPrice();
-      yVals.add(new CandleEntry(i, Float.parseFloat(highestPrice), Float.parseFloat(lowestPrice),
-          Float.parseFloat(openingPrice), Float.parseFloat(closingPrice)));
+      yVals.add(new CandleEntry(i, Float.parseFloat(highestPrice),
+          Float.parseFloat(lowestPrice), Float.parseFloat(openingPrice),
+          Float.parseFloat(closingPrice)));
     }
 
     CandleDataSet dataSet = new CandleDataSet(yVals, "Data Set");

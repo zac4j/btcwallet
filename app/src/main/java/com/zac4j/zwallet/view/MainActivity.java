@@ -109,6 +109,13 @@ public class MainActivity extends BaseActivity
         updateAccountInfo();
       }
     });
+
+    int currentCoin = mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, 0);
+    if (currentCoin == Constants.COIN_TYPE_BTC) {
+      coinSwitch.setChecked(true);
+    } else {
+      coinSwitch.setChecked(false);
+    }
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

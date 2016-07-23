@@ -8,6 +8,7 @@ package com.zac4j.zwallet.model.local;
 public class KLineEntity {
 
   private String date;
+  private String time;
   private String openingPrice; // 开盘价
   private String highestPrice; // 最高价
   private String lowestPrice; // 最低价
@@ -17,9 +18,10 @@ public class KLineEntity {
   public KLineEntity() {
   }
 
-  public KLineEntity(String date, String openingPrice, String highestPrice, String lowestPrice,
+  public KLineEntity(String date, String time,String openingPrice, String highestPrice, String lowestPrice,
       String closingPrice, String tradingVolume) {
     this.date = date;
+    this.time = time;
     this.openingPrice = openingPrice;
     this.highestPrice = highestPrice;
     this.lowestPrice = lowestPrice;
@@ -33,6 +35,14 @@ public class KLineEntity {
 
   public void setDate(String date) {
     this.date = date;
+  }
+
+  public String getTime() {
+    return time;
+  }
+
+  public void setTime(String time) {
+    this.time = time;
   }
 
   public String getOpeningPrice() {

@@ -72,7 +72,7 @@ import rx.Subscription;
     String methodName = METHOD_GET_ORDER_INFO;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     final int coinType =
-        mPrefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
+        mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
 
     List<Pair<String, String>> parameterPairs = new ArrayList<>();
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, methodName);

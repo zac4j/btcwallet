@@ -182,7 +182,7 @@ public class CoinTradeViewModel implements ViewModel {
     progressVisibility.set(View.VISIBLE);
     String methodName = tradeType == Trade.BUY ? METHOD_NAME_BUY : METHOD_NAME_SELL;
     String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);
-    int coinType = mPrefsHelper.getPrefs().getInt(Constants.COIN_TYPE, Constants.COIN_TYPE_LTC);
+    int coinType = mPrefsHelper.getPrefs().getInt(Constants.CURRENT_SELECT_COIN, Constants.COIN_TYPE_LTC);
 
     List<Pair<String, String>> parameterPairs = new ArrayList<>();
     Pair<String, String> methodNamePair = new Pair<>(Constants.METHOD_NAME, methodName);

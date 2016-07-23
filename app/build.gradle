@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -42,13 +41,9 @@ dependencies {
   compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
   // Rx
   compile "io.reactivex:rxandroid:${rxandroidVersion}"
-  compile "io.reactivex:rxjava:${rxjavaVersion}"
-  // Dagger2
+  // Google
   compile "com.google.dagger:dagger:${daggerVersion}"
   provided "com.google.dagger:dagger-compiler:${daggerVersion}"
-  // Knife
-  compile "com.jakewharton:butterknife:${knifeVersion}"
-  apt "com.jakewharton:butterknife-compiler:${knifeVersion}"
   // Chart
   compile "com.github.PhilJay:MPAndroidChart:${chartVersion}"
   //compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha2'
