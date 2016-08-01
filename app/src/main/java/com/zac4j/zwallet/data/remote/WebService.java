@@ -14,6 +14,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import rx.Observable;
 import rx.Single;
 
 /**
@@ -83,20 +84,22 @@ public interface WebService {
 
   /**
    * 获取分时交易数据
+   *
    * @param coinType 1.btc BitCoin 2.ltc LiteCoin
    * @param interval 001~400 https://github.com/huobiapi/API_Docs_en/wiki/REST-Interval
    * @return 所选间隔时间的交易数据
    */
-  @GET("/staticmarket/{coin}_kline_{interval}_json.js") Single<List<List>>
-      getIntervalTimeData(@Path("coin") String coinType, @Path("interval") String interval);
+  @GET("/staticmarket/{coin}_kline_{interval}_json.js") Single<List<List>> getIntervalTimeData(
+      @Path("coin") String coinType, @Path("interval") String interval);
 
   /**
-   * 获取实时交易数据
+   * 获取实时交易数据 (the request is synchronously)
+   *
    * @param coinType 1.btc BitCoin 2.ltc LiteCoin
    * @return 实时交易数据
    */
-  @GET("/staticmarket/ticker_{coin}_json.js") Single<RealTimeEntity>
-  getRealTimeData(@Path("coin") String coinType);
+  @GET("/staticmarket/ticker_{coin}_json.js") Observable<RealTimeEntity> getRealTimeData(
+      @Path("coin") String coinType);
 
   class Creator {
     public static WebService create() {

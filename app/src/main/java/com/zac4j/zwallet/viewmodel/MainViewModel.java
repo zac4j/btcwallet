@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.zac4j.zwallet.R;
@@ -22,9 +23,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
@@ -92,24 +99,35 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
     String requestTime = String.valueOf(System.currentTimeMillis()).substring(0, 10);
     getAccountInfo(requestTime);
     getRecentOrders(requestTime, coinType);
-    getRealTimeData(coinType);
+    pollCoinPrice(coinType);
   }
 
-  private void getRealTimeData(int coinType) {
-    String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
+  /**
+   * 轮询Coin实时价格
+   *
+   * @param coinType 1.BitCoin 2.LiteCoin
+   */
+  private void pollCoinPrice(int coinType) {
+    final String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
     final NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
-    mSubscription = mWebService.getRealTimeData(type)
-        .compose(RxUtils.<RealTimeEntity>applySchedulers())
-        .subscribe(new Subscriber<RealTimeEntity>() {
-          @Override public void onCompleted() {
-          }
 
-          @Override public void onError(Throwable e) {
+    Observable.interval(0, 30, TimeUnit.SECONDS, Schedulers.io())
+        .flatMap(new Func1<Long, Observable<RealTimeEntity>>() {
+          @Override public Observable<RealTimeEntity> call(Long aLong) {
+            return mWebService.getRealTimeData(type);
+          }
+        })
+        .doOnError(new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
             coinPrice.set(formatter.format(0.00d));
             priceVariation.set(formatter.format(0.00d));
           }
-
-          @Override public void onNext(RealTimeEntity realTimeEntity) {
+        })
+        .retry()
+        .distinct()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<RealTimeEntity>() {
+          @Override public void call(RealTimeEntity realTimeEntity) {
             mRealTime = realTimeEntity.getTime();
             double lastPrice = realTimeEntity.getTicker().getLast();
             double openPrice = realTimeEntity.getTicker().getOpen();
