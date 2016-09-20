@@ -29,6 +29,13 @@ public class PreferencesHelper {
     return mPrefs;
   }
 
+  public SharedPreferences.Editor getEditor() {
+    if (mPrefs == null) {
+      throw new IllegalStateException("PreferencesHelper had not initialized!");
+    }
+    return mPrefs.edit();
+  }
+
   public void clear() {
     mPrefs.edit().clear().apply();
   }

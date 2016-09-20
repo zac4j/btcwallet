@@ -41,4 +41,10 @@
     <item>Month</item>
     <item>Year</item>
   </string-array>
+  <string-array name="refresh_frequency">
+    <item>10s</item>
+    <item>30s</item>
+    <item>45s</item>
+    <item>60s</item>
+  </string-array>
 </resources>

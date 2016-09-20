@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.zac4j.zwallet.viewmodel.SettingsViewModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/include_actionbar"
+        android:id="@id/actionbar"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space.small"
+        android:background="@color/white"
+        android:padding="@dimen/space.small"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:text="@string/frequency"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+          />
+
+      <android.support.v7.widget.AppCompatSpinner
+          android:id="@id/frequency_spinner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:entries="@array/refresh_frequency"
+          />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space.divider"
+        android:background="@color/white"
+        android:padding="@dimen/space.small"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:text="@string/night_mode"
+          android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+          />
+
+      <Switch
+          android:id="@id/night_mode_switch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          />
+
+    </RelativeLayout>
+
+  </LinearLayout>
+</layout>

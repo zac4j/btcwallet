@@ -17,9 +17,9 @@ import java.util.List;
 
 public class Utils {
 
-  public static final String ACCESS_KEY = "0afd3df5-bc3dfe76-e749a82f-78c61";
+  public static final String ACCESS_KEY = "2e0be253-3d1f9e86-977870bf-26124";
 
-  private static final String SECRET_KEY = "47922755-48ad16d8-6099bf62-46f15";
+  private static final String SECRET_KEY = "2547271c-28a8ee11-f1d9a301-cf4fc";
 
   public static String generateSign(List<Pair<String, String>> pairs) {
     String result = "access_key=" + ACCESS_KEY;

@@ -65,6 +65,8 @@
   <string name="order_detail_label_subtotal">Subtotal</string>
   <string name="order_detail_label_fee">HuoBi Fee</string>
   <string name="order_detail_label_total">Total</string>
+  <string name="frequency">Coin Price Refresh Frequency</string>
+  <string name="night_mode">Night Mode</string>
 
 </resources>
 

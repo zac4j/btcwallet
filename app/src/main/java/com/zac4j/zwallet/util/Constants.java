@@ -22,4 +22,5 @@ public class Constants {
   public static final String MARKET_TYPE_CNY = "cny";
   public static final String MARKET_TYPE_USD = "usd";
 
+  public static final String INTERVAL_PERIOD = "interval_period";
 }

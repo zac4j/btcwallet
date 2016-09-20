@@ -61,5 +61,7 @@
   <!--dashboard-->
   <item name="dashboard_spinner" type="id" />
   <item name="dashboard_kline_chart" type="id" />
+  <item name="frequency_spinner" type="id"/>
+  <item name="night_mode_switch" type="id"/>
 
 </resources>

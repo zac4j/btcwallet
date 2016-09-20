@@ -2,12 +2,12 @@ package com.zac4j.zwallet.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -152,6 +152,9 @@ public class MainActivity extends BaseActivity
       case R.id.action_transaction_process:
         startActivity(new Intent(MainActivity.this, TransactionActivity.class).putExtra(
             TransactionActivity.EXTRA_TRANS_TYPE, Transaction.PROCESSED));
+        break;
+      case R.id.action_settings:
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         break;
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.zac4j.zwallet.R;
@@ -44,6 +43,8 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
 
   private static final String GET_ACCOUNT_INFO = "get_account_info";
   private static final String GET_RECENT_ORDERS = "get_new_deal_orders";
+
+  public static final int DEFAULT_INTERVAL_PERIOD = 30;
 
   public ObservableInt progressVisibility;
   public ObservableInt ordersVisibility;
@@ -111,7 +112,10 @@ import static com.zac4j.zwallet.util.Utils.ACCESS_KEY;
     final String type = coinType == Constants.COIN_TYPE_BTC ? "btc" : "ltc";
     final NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.CHINA);
 
-    Observable.interval(0, 30, TimeUnit.SECONDS, Schedulers.io())
+    final int intervalPeriod =
+        mPrefsHelper.getPrefs().getInt(Constants.INTERVAL_PERIOD, DEFAULT_INTERVAL_PERIOD);
+
+    Observable.interval(0, intervalPeriod, TimeUnit.SECONDS, Schedulers.io())
         .flatMap(new Func1<Long, Observable<RealTimeEntity>>() {
           @Override public Observable<RealTimeEntity> call(Long aLong) {
             return mWebService.getRealTimeData(type);

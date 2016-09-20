@@ -4,6 +4,7 @@
   <dimen name="activity_vertical_margin">16dp</dimen>
 
   <dimen name="width_price_display">180dp</dimen>
+  <dimen name="width_min_spinner">80dp</dimen>
 
   <!--height-->
   <dimen name="header_height_nav">192dp</dimen>

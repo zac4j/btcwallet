@@ -46,7 +46,11 @@
         android:screenOrientation="portrait"
         />
 
-    <service android:name=".service.PollService" />
+    <activity
+        android:name=".view.SettingsActivity"
+        android:screenOrientation="portrait"
+        />
+
   </application>
 
 </manifest>
